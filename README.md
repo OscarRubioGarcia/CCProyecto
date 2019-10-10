@@ -13,3 +13,4 @@ Planeamos utilizar Java como lenguaje para la aplicación y en conjunto con Spri
 ## Licencia
 
 El proyecto será generado con una licencia de tipo MIT. Esta licencia no impone muchas limitaciones sobre la reutilización y adicionalmente es altamente compatible con otras licencias como la GNU. Utilizando esta licencia creemos que es posible que no existan problemas a la hora de compartir software.
+
