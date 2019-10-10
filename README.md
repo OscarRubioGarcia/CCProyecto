@@ -8,3 +8,6 @@ Esta aplicación contendrá las siguientes facultades:
  * Historial de ideas en las que el usuario haya buscado
  
 Planeamos utilizar Java como lenguaje para la aplicación y en conjunto con Spring para poder desplegarlo en la web. Adicionalmente daremos uso de una base de datos NoSQL.
+
+Licencia
+El proyecto será generado con una licencia de tipo MIT. Esta licencia no impone muchas limitaciones sobre la reutilización y adicionalmente es altamente compatible con otras licencias como la GNU. Utilizando esta licencia creemos que es posible que no existan problemas a la hora de compartir software.
