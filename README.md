@@ -8,7 +8,11 @@ Esta aplicación contendrá las siguientes facultades:
  * Búsqueda en la base de datos de ideas categorizadas por tipo y popularidad
  * Historial de ideas en las que el usuario haya buscado
  
-Planeamos utilizar Java como lenguaje para la aplicación y en conjunto con Spring para poder desplegarlo en la web. Adicionalmente daremos uso de una base de datos NoSQL.
+Planeamos utilizar Java como lenguaje para la aplicación y en conjunto con Spring boot, Heroku y Maven para poder desplegarlo en la web con posibilidad a escalabilidad. Adicionalmente daremos uso de una base de datos NoSQL y utiilzaremos un servicio REST como nucleo para realizar los servicios maás simples.
+
+## La Arquiectura de los Microservicios
+
+Nuestro proyecto dará uso de la arquitectura de los microservicios de forma de que cada servicio especificado sea independiente del resto de la aplicación, por ejemplo nuestra base de datos se encargara del almacenado de los datos, mientras que heroku y maven serán utilizados para manejar el despliegue de la aplicación y nuestro api REST será la encargada de notificar las acciones realizadas en la aplicación.
 
 ## Licencia
 
