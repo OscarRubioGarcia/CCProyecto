@@ -1,0 +1,6 @@
+1571056161491	Rename type 'Item'
+1571056171810	Rename type 'ItemRepository'
+1571056180664	Rename type 'ItemInitializer'
+1571056207932	Rename field 'itemRepository'
+1571056218240	Rename local variable 'itemRepository'
+1571056285920	Rename local variable 'itemName'
