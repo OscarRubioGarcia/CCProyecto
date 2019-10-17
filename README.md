@@ -21,7 +21,7 @@ Planeamos utilizar Java como lenguaje para la aplicación en conjunto con Spring
 
 ### Diagrama de microservicios 
 
-![Microservicios]( https://raw.githubusercontent.com/OscarRubioGarcia/CCProyecto/master/docs/Representacion-microservicios.jpg )
+![Microservicios]( https://raw.githubusercontent.com/OscarRubioGarcia/CCProyecto/master/docs/Representacion-microservicios-V0.2.jpg )
 
 ## La Arquitectura de los Microservicios
 
