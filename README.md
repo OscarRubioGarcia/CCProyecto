@@ -30,8 +30,8 @@ Dicho esto tendremos APIs REST para manejar la comunicación entre los servicios
 
 ## La Base de Datos
 
-Nuestra base de datos de historias contendrá simplemente un id, titulo, autor, categoría, imagen, historia
-Nuestra base de datos de historias prometedoras contendra id_historia, categoria_historia, inversionTotal
+Nuestra base de datos de historias contendrá simplemente un id, titulo, autor, categoría, imagen, historia.
+Nuestra base de datos de historias prometedoras contendra id_historia, categoria_historia, inversionTotal.
 
 ## Licencia
 
