@@ -26,7 +26,12 @@ Planeamos utilizar Java como lenguaje para la aplicación en conjunto con Spring
 ## La Arquitectura de los Microservicios
 
 Debido a las reglas establecidas por la arquitectura de microservicios tendremos que asegurarnos que todos nuestros servicios sean independientes del resto de la aplicación. Cada servicio tendrá acceso solamente a su base de datos específica y podrán ser testeados de manera aislada. 
-Dicho esto tendremos APIs REST para manejar la comunicación entre los servicios de Búsqueda de historias e inversión en historias, a traves de HTML. Utilizaremos una comunicación asíncrona entre el bot de Twitter y el sistema de inversión en historias para manejar la comunicación entre estos.
+Dicho esto tendremos APIs REST para manejar la comunicación entre los servicios de Búsqueda de historias e inversión en historias, a traves de HTML. Utilizaremos una comunicación asíncrona con RabbitMQ entre el bot de Twitter y el sistema de inversión en historias para manejar la comunicación entre estos.
+
+Utilizaremos las sguientes tecnologias para:
+ * Log:
+ * Almacenes de de datos: MongoDB, Redis
+ * Configuracion remota: Spring Cloud
 
 ## La Base de Datos
 
