@@ -11,7 +11,9 @@ Esta aplicación contendrá inicialmente las siguientes facultades:
  
 ## Tecnologías Planteadas
 
-Planeamos utilizar Java como lenguaje para la aplicación en conjunto con Spring boot con Maven y utilizaremos un servidor Eureka para almacenar toda la información de los microservicios. Tendremos un BOT de Twitter, programado en Node.js, que se comunicará con nuestro microservicio de inversiones. Adicionalmente daremos uso de bases de datos NoSQL para el almacenamiento de los datos de las historias e inversiones. Utilizaremos un api REST para comunicar los 2 microservicios (historias y inversiones) a traves de HTML. Utilizaremos el servidor Eureka en conjunto con Zuul para crear la API Gateway. Finalmente pretenderemos utilizar JWT para autorizar el acceso al sistema.
+Planeamos utilizar Java como lenguaje para la aplicación en conjunto con Spring boot con Maven y utilizaremos un servidor Eureka para almacenar toda la información de los microservicios. 
+Tendremos un BOT de Twitter, programado en Node.js, que se comunicará con nuestro microservicio de inversiones. Adicionalmente daremos uso de bases de datos NoSQL para el almacenamiento de los datos de las historias e inversiones. 
+Utilizaremos un api REST para comunicar los 3 microservicios a traves de HTML. Utilizaremos el servidor Eureka en conjunto con Zuul para crear la API Gateway. 
 
 ### Microservicios planteados
 
@@ -21,12 +23,12 @@ Planeamos utilizar Java como lenguaje para la aplicación en conjunto con Spring
 
 ### Diagrama de microservicios 
 
-![Microservicios]( https://raw.githubusercontent.com/OscarRubioGarcia/CCProyecto/master/docs/Representacion-microservicios-V0.2.jpg )
+![Microservicios]( https://raw.githubusercontent.com/OscarRubioGarcia/CCProyecto/master/docs/Representacion-microservicios-V0.3.jpg )
 
 ## La Arquitectura de los Microservicios
 
 Debido a las reglas establecidas por la arquitectura de microservicios tendremos que asegurarnos que todos nuestros servicios sean independientes del resto de la aplicación. Cada servicio tendrá acceso solamente a su base de datos específica y podrán ser testeados de manera aislada. 
-Dicho esto tendremos APIs REST para manejar la comunicación entre los servicios de Búsqueda de historias e inversión en historias, a traves de HTML. Utilizaremos una comunicación asíncrona con RabbitMQ entre el bot de Twitter y el sistema de inversión en historias para manejar la comunicación entre estos.
+Dicho esto tendremos APIs REST para manejar la comunicación entre los servicios de Búsqueda de historias e inversión en historias, a traves de HTML. Utilizaremos un servicio REST entre el bot de Twitter y el sistema de inversión en historias para manejar la comunicación entre estos.
 
 Utilizaremos las sguientes tecnologias para:
  * Log:
