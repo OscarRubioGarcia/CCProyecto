@@ -8,20 +8,20 @@ De esta forma el usuario podrá buscar proyectos o clubs en la base de datos y d
 
 Esta aplicación contendrá inicialmente las siguientes facultades:
  * Gestión de proyectos. 
- ** Búsqueda en la base de datos de proyectos.
- ** Creación de nuevos proyectos
- ** Eliminación de proyectos existentes
- ** Modificación de proyectos existentes
+    * Búsqueda en la base de datos de proyectos.
+    * Creación de nuevos proyectos
+    * Eliminación de proyectos existentes
+    * Modificación de proyectos existentes
  * Búsqueda en la base de datos de clubs.
- ** Búsqueda en la base de datos de clubs.
- ** Creación de nuevos clubs
- ** Eliminación de proyectos clubs
- ** Modificación de proyectos clubs
+    * Búsqueda en la base de datos de clubs.
+    * Creación de nuevos clubs
+    * Eliminación de proyectos clubs
+    * Modificación de proyectos clubs
  * Búsqueda en la base de datos de participantes libres.
- ** Búsqueda en la base de participantes libres.
- ** Creación de nuevos participantes libres
- ** Eliminación de proyectos participantes libres
- ** Modificación de proyectos participantes libres
+    * Búsqueda en la base de participantes libres.
+    * Creación de nuevos participantes libres
+    * Eliminación de proyectos participantes libres
+    * Modificación de proyectos participantes libres
  * Bot de Telegram para inicializar los servicios.
 
 ### Microservicios planteados
