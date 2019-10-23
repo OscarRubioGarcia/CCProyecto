@@ -2,9 +2,11 @@
 
 ## Descripción del proyecto
 
+Definiremos nuestro sistema en dirigido al ámbito escolar, específicamente a la formación de grupos sociales entre estudiantes de un establecimiento escolar.
+
 La aplicación en si será una aplicación dedicada a ayudar en la creación de grupos de estudiantes, ya sea con un objetivo específico (Completar un proyecto) o simplemente para compartir intereses (Clubs). Intentaremos crear una pequeña aplicación con la cual los estudiantes podrán formar redes sociales entre ellos.
 
-De esta forma el usuario podrá buscar proyectos o clubs en la base de datos y decidir si desea unirse a estos, demostrando de esta manera que tiene interés por el club. Añadiremos también la posibilidad de que un estudiante se exponga al resto, con el objetivo de formar nuevos proyectos/clubs o simplemente conocer gente. Adicionalmente el sistema contendrá un bot en Telegram el cual será utilizado para comunicarse con el sistema.
+De esta forma el usuario podrá buscar proyectos o clubs en la base de datos y decidir si desea unirse a estos, demostrando de esta manera que tiene interés por el club. Añadiremos también la posibilidad de que un estudiante se exponga al resto, con el objetivo de formar nuevos proyectos/clubs o simplemente conocer gente. Adicionalmente tendremos un bot en Telegram el cual será utilizado para comunicarse con el sistema.
 
 Esta aplicación contendrá inicialmente las siguientes facultades:
  * Gestión de proyectos. 
@@ -34,12 +36,22 @@ Esta aplicación contendrá inicialmente las siguientes facultades:
 
 Debido a las reglas establecidas por la arquitectura de microservicios tendremos que asegurarnos que todos nuestros servicios sean independientes del resto de la aplicación. Cada servicio tendrá acceso solamente a su base de datos específica y podrán ser testeados de manera aislada. 
 
-Dicho esto crearemos en nuestro proyecto, tendremos APIs REST para manejar la comunicación entre todos nuestros microservicios, a través de HTML. Utilizaremos una API GATEWAY para mantener escalabilidad y manejar las llamas a servicios. Cada microservicio tendrá establecida una base de datos NoSQL especifica.
+Dicho esto crearemos en nuestro proyecto, tendremos APIs REST para manejar la comunicación entre todos nuestros microservicios, a través de HTML. 
+
+Utilizaremos una API GATEWAY creada con Amazon API Gateway para mantener escalabilidad y manejar las llamas a servicios. Adicionalmente el bot de telegram se comunicara con el Gateway a la hora de comunicarse con los microservicios.
+
+Cada microservicio tendrá establecida una base de datos NoSQL especifica.
 
 Utilizaremos las siguientes tecnologías para los microservicios:
- * Log:
- * Almacenes de datos: MongoDB o DynamoDB
- * Configuración remota: Etcd
+ * Log: Kibana, será utilizado para mantener logs de todos los microservicios y monitorizarlos.
+ * Almacenes de datos: MongoDB o DynamoDB serán usadas para almacenar los datos de cada microservicio.
+ * Configuración remota: Etcd, será utilizado para guardar la información crítica del sistema, acceso a bases de datos.
+
+#### Comunicación entre microservicios
+
+Los microservicios serán independientes los unos de los otros y únicamente se comunicaran con sus almacenes de datos pertinentes y la API Gateway.
+
+La API Gateway se comunicara con los 3 microservicios y con el bot de telegram.
  
 ### Diagrama de microservicios 
 
@@ -47,14 +59,13 @@ Utilizaremos las siguientes tecnologías para los microservicios:
 
 ## La Base de Datos
 
-Nuestra base de datos de proyectos contendrá simplemente un idProyecto, titulo, asignatura, descripción, plazasLibres, grupoTelegram.
+Nuestra base de datos de proyectos contendrá simplemente un idProyecto, establecimientoEscolar, titulo, asignatura, descripción, plazasLibres, grupoTelegram.
 
-Nuestra base de datos de participantes libres contendrá idParticipante, nombre, apellidos, edad, aliasTelegram, interés, ocupación.
+Nuestra base de datos de participantes libres contendrá idParticipante, establecimientoEscolar, nombre, apellidos, edad, aliasTelegram, interés, ocupación.
 
-Nuestra base de datos de clubs contendrá un idClub, nombreClub, descripción, plazasLibres, grupoTelegram.
+Nuestra base de datos de clubs contendrá un idClub, establecimientoEscolar, nombreClub, descripción, plazasLibres, grupoTelegram.
 
 
 ## Licencia
 
 El proyecto será generado con una licencia de tipo GNU. Esta licencia no impone muchas limitaciones sobre la reutilización. Utilizando esta licencia creemos que es posible que no existan impedimentos a la hora de compartir software.
-
