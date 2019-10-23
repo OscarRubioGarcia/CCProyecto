@@ -48,7 +48,9 @@ Utilizaremos las siguientes tecnologías para los microservicios:
 ## La Base de Datos
 
 Nuestra base de datos de proyectos contendrá simplemente un idProyecto, titulo, asignatura, descripción, plazasLibres, grupoTelegram.
+
 Nuestra base de datos de participantes libres contendrá idParticipante, nombre, apellidos, edad, aliasTelegram, interés, ocupación.
+
 Nuestra base de datos de clubs contendrá un idClub, nombreClub, descripción, plazasLibres, grupoTelegram.
 
 
