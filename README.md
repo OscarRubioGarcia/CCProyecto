@@ -36,7 +36,7 @@ Esta aplicación contendrá inicialmente las siguientes facultades:
 
 Debido a las reglas establecidas por la arquitectura de microservicios tendremos que asegurarnos que todos nuestros servicios sean independientes del resto de la aplicación. Cada servicio tendrá acceso solamente a su base de datos específica y podrán ser testeados de manera aislada. 
 
-Dicho esto crearemos en nuestro proyecto, tendremos APIs REST para manejar la comunicación entre todos nuestros microservicios, a través de HTML. 
+Dicho esto crearemos en nuestro proyecto, tendremos APIs REST para manejar la comunicación entre todos nuestros microservicios, a través de HTML. Estos microservicios serán desarrollados usando Python Flask, debido a su facilidad de uso a la hora de creación de productos web y debido a que encaja perfectamente con el tipo de arquitectura de microservicios que estamos utilizando.
 
 Utilizaremos una API GATEWAY creada con Amazon API Gateway para mantener escalabilidad y manejar las llamas a servicios. Adicionalmente el bot de telegram se comunicara con el Gateway a la hora de comunicarse con los microservicios.
 
