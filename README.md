@@ -2,69 +2,61 @@
 
 ## Descripción del proyecto
 
-Definiremos nuestro sistema en dirigido al ámbito escolar, específicamente a la formación de grupos sociales entre estudiantes de un establecimiento escolar.
+Definiremos nuestro sistema dirigido al ámbito escolar, específicamente a la formación de grupos sociales entre estudiantes de un establecimiento escolar y a la notificación de nuevos clubs o noticias.
 
-La aplicación en si será una aplicación dedicada a ayudar en la creación de grupos de estudiantes, ya sea con un objetivo específico (Completar un proyecto) o simplemente para compartir intereses (Clubs). Intentaremos crear una pequeña aplicación con la cual los estudiantes podrán formar redes sociales entre ellos.
+La aplicación en si será una aplicación dedicada a ayudar en la creación de grupos de estudiantes y mantenerles informados de noticias ocurriendo en su campus. Intentaremos crear una pequeña aplicación con la cual los estudiantes podrán formar redes sociales entre ellos.
 
-De esta forma el usuario podrá buscar proyectos o clubs en la base de datos y decidir si desea unirse a estos, demostrando de esta manera que tiene interés por el club. Añadiremos también la posibilidad de que un estudiante se exponga al resto, con el objetivo de formar nuevos proyectos/clubs o simplemente conocer gente. Adicionalmente tendremos un bot en Telegram el cual será utilizado para comunicarse con el sistema.
+De esta forma el usuario podrá buscar clubs en la base de datos y decidir si desea unirse a estos o simplemente buscar las noticias que estén ocurriendo en el campus. Añadiremos también la posibilidad de que un estudiante se exponga al resto, con el objetivo de formar nuevos clubs o simplemente conocer gente. Existirá también un buscador de novedades en el campus. Adicionalmente tendremos un bot en Telegram el cual será utilizado por los estudiantes para comunicarse con el sistema.
 
 Esta aplicación contendrá inicialmente las siguientes facultades:
- * Gestión de proyectos. 
-    * Búsqueda en la base de datos de proyectos.
-    * Creación de nuevos proyectos
-    * Eliminación de proyectos existentes
-    * Modificación de proyectos existentes
- * Búsqueda en la base de datos de clubs.
-    * Búsqueda en la base de datos de clubs.
-    * Creación de nuevos clubs
-    * Eliminación de proyectos clubs
-    * Modificación de proyectos clubs
- * Búsqueda en la base de datos de participantes libres.
-    * Búsqueda en la base de participantes libres.
-    * Creación de nuevos participantes libres
-    * Eliminación de proyectos participantes libres
-    * Modificación de proyectos participantes libres
- * Bot de Telegram para inicializar los servicios.
+* Gestión de clubs. 
+* Gestión de noticias.
+* Gestión de estudiantes libres.
+* Visor de Novedades
+* Bot de Telegram para inicializar los servicios.
 
 ### Microservicios planteados
 
- * Gestión de Proyectos
+ * Gestión de Noticias
  * Gestión de Clubs
  * Gestión de Participantes libres
+ * Visor de Novedades
 
 ## La Arquitectura de los Microservicios
 
 Debido a las reglas establecidas por la arquitectura de microservicios tendremos que asegurarnos que todos nuestros servicios sean independientes del resto de la aplicación. Cada servicio tendrá acceso solamente a su base de datos específica y podrán ser testeados de manera aislada. 
 
-Dicho esto crearemos en nuestro proyecto, tendremos APIs REST para manejar la comunicación entre todos nuestros microservicios, a través de HTML. Estos microservicios serán desarrollados usando Python Flask, debido a su facilidad de uso a la hora de creación de productos web y debido a que encaja perfectamente con el tipo de arquitectura de microservicios que estamos utilizando.
+Dicho esto crearemos en nuestro proyecto, tendremos APIs REST para manejar la comunicación entre todos nuestros microservicios, a través de HTML. Estos microservicios serán desarrollados usando Python Flask, debido a su facilidad de uso a la hora de creación de productos web.
 
-Utilizaremos una API GATEWAY creada con Amazon API Gateway para mantener escalabilidad y manejar las llamas a servicios. Adicionalmente el bot de telegram se comunicara con el Gateway a la hora de comunicarse con los microservicios.
+Utilizaremos una API GATEWAY creada con Nginx para mantener escalabilidad y manejar las llamas a servicios. Adicionalmente el bot de telegram se comunicara con el Gateway a la hora de comunicarse con los microservicios.
 
-Cada microservicio tendrá establecida una base de datos NoSQL especifica.
+Los microservicios de “Gestion de Clubs”, “Gestion de Noticias” y “Gestion de Estudiantes Libres” tendrá establecida una base de datos NoSQL de MongoDB.
 
 Utilizaremos las siguientes tecnologías para los microservicios:
- * Log: Kibana, será utilizado para mantener logs de todos los microservicios y monitorizarlos.
- * Almacenes de datos: MongoDB o DynamoDB serán usadas para almacenar los datos de cada microservicio.
- * Configuración remota: Etcd, será utilizado para guardar la información crítica del sistema, acceso a bases de datos.
+ * Log: X, será utilizado para mantener logs de todos los microservicios y monitorizarlos.
+ * Almacenes de datos: MongoDB será usado para almacenar los datos de cada microservicio que lo necesite.
+ * Configuración remota: Consul, será utilizado para guardar la información crítica del sistema.
 
 #### Comunicación entre microservicios
 
-Los microservicios serán independientes los unos de los otros y únicamente se comunicaran con sus almacenes de datos pertinentes y la API Gateway.
+ * “Gestion de Clubs” se comunicara con el microservicio de “Visor de Novedades” mediante una API REST.
+ * “Gestion de Noticias” se comunicara con el microservicio de “Visor de Novedades” mediante una API REST.
+ * “Gestion de Estudiantes Libres” se comunicara con el microservicio de “Visor de Novedades” mediante una API REST.
+ * La API Gateway se comunicara con los 4 microservicios y con el bot de telegram, atendiendo sus peticiones.
 
-La API Gateway se comunicara con los 3 microservicios y con el bot de telegram.
+#### Tecnologias Usadas y porque
+
+Utilizaremos las siguientes tecnologías en el proyecto:
+ * Python como lenguaje de programación de nuestros microservicios, debido a su lenguaje simple y poco verboso.
+ * Consul para la configuración remota debido a que daremos uso de su capacidad de almacenamiento llaves-valor y su servicio de descubrimiento. Adicionalmente podríamos utilizarlo para la monitorización del sistema.
+ * MongoDB para ser utilizado como almacén de datos de los microservicios, esto se debe al carácter de nuestros datos. Nuestro sistema no requiere respuestas en tiempo real y solo tratara con datos simples estilo documentos, es por esto por lo que MongoDB, utilizando la flexibilidad del lenguaje JSON, nos será perfecto para nuestro sistema.
+ * Nginx será utilizado para la creación del API GATEWAY por el cual se realizaran las peticiones a los microservicios. Escogimos Nginx por sus capacidades como balanceador de cargas, servidor web/proxy inverso ligero de alto rendimiento, soporte de HTML, con soporte para más de 10000 conexiones simultaneas.
+ * Sistema logs (X)
+
  
 ### Diagrama de microservicios 
 
-![Microservicios]( https://raw.githubusercontent.com/OscarRubioGarcia/CCProyecto/master/docs/Representacion-microservicios-V0.4.jpg )
-
-## La Base de Datos
-
-Nuestra base de datos de proyectos contendrá simplemente un idProyecto, establecimientoEscolar, titulo, asignatura, descripción, plazasLibres, grupoTelegram.
-
-Nuestra base de datos de participantes libres contendrá idParticipante, establecimientoEscolar, nombre, apellidos, edad, aliasTelegram, interés, ocupación.
-
-Nuestra base de datos de clubs contendrá un idClub, establecimientoEscolar, nombreClub, descripción, plazasLibres, grupoTelegram.
-
+![Microservicios]( https://raw.githubusercontent.com/OscarRubioGarcia/CCProyecto/master/docs/Representacion-microservicios-V0.5.jpg )
 
 ## Licencia
 
