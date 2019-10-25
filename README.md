@@ -59,6 +59,10 @@ Utilizaremos las siguientes tecnologías en el proyecto:
 
 ![Microservicios]( https://raw.githubusercontent.com/OscarRubioGarcia/CCProyecto/master/docs/Representacion-microservicios-V0.6.jpg )
 
+### Historias de Usuario
+
+Para obtener más información acerca de las historias de usuario desarrolladas para este proyecto visite el siguiente enlace: [Historias de Usuario]( https://github.com/OscarRubioGarcia/CCProyecto/blob/master/docs/UserStories.md )
+
 ## Licencia
 
 El proyecto será generado con una licencia de tipo GNU. Esta licencia no impone muchas limitaciones sobre la reutilización. Utilizando esta licencia creemos que es posible que no existan impedimentos a la hora de compartir software.
