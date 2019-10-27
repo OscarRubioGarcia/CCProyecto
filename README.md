@@ -48,12 +48,11 @@ Utilizaremos las siguientes tecnologías para los microservicios:
 #### Porque usamos las tecnologías escogidas 
 
 Utilizaremos las siguientes tecnologías en el proyecto:
- * Python como lenguaje de programación de nuestros microservicios, debido a su lenguaje simple y poco verboso.
+ * Python como lenguaje de programación de nuestros microservicios, debido a su lenguaje simple y poco verboso a la hora de la creación de programas sencillos, como el nuestro en este caso.
  * Etcd para la configuración remota debido a que daremos uso de su capacidad de almacenamiento llaves-valor con seguridad incorporada y su servicio de descubrimiento. 
- * MongoDB para ser utilizado como almacén de datos de los microservicios, esto se debe al carácter de nuestros datos. Nuestro sistema no requiere respuestas en tiempo real y solo tratara con datos simples estilo documentos, es por esto por lo que MongoDB, utilizando la flexibilidad del lenguaje JSON, nos será perfecto para nuestro sistema.
+ * Cassandra será utilizado como almacén de datos de nuestros microservicios, esto se debe al carácter de nuestros datos. Nuestro sistema utilizara datos estilo clave-valor y deberá contener el menor tiempo de respuesta posible con el fin de aportar los resultados lo antes posible al cliente. Cassandra nos aportara todas esas cualidades, además de proporcionar escalabilidad lineal a la base de datos del sistema. Adicionalmente, se podrán modificar las tablas de la base de datos en tiempo de ejecución sin bloquear otras actualizaciones o consultas, permitiendo a múltiples usuarios utilizar el sistema sin problemas.
  * Nginx será utilizado para la creación del API GATEWAY por el cual se realizaran las peticiones a los microservicios. Escogimos Nginx por sus capacidades como balanceador de cargas, servidor web/proxy inverso ligero de alto rendimiento, soporte de HTML, con soporte para más de 10000 conexiones simultaneas.
- * Sistema logs (X)
-
+ * LogStash será utilizado como nuestro sistema de monitorización de microservicios y gestión de logs. Apache LogStache funcionara como servidor único de guardado de logs, algo que podría sernos un problema en el futuro, en el cual guardaremos los datos de logs de nuestro sistema. Todos los logs serán encriptados del servidor web al servidor central proporcionando a nuestro sistema seguridad adicional.
  
 ### Diagrama de microservicios 
 
