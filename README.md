@@ -56,7 +56,7 @@ Utilizaremos las siguientes tecnologías en el proyecto:
  
 ### Diagrama de microservicios 
 
-![Microservicios]( https://raw.githubusercontent.com/OscarRubioGarcia/CCProyecto/master/docs/Representacion-microservicios-V0.6.jpg )
+![Microservicios]( https://raw.githubusercontent.com/OscarRubioGarcia/CCProyecto/master/docs/Representacion-microservicios-V0.7.jpg )
 
 ### Historias de Usuario
 
