@@ -28,15 +28,15 @@ Esta aplicación contendrá inicialmente las siguientes facultades:
 
 Debido a las reglas establecidas por la arquitectura de microservicios tendremos que asegurarnos que todos nuestros servicios sean independientes del resto de la aplicación. Cada servicio tendrá acceso solamente a su base de datos específica y podrán ser testeados de manera aislada. 
 
-Dicho esto crearemos en nuestro proyecto, tendremos APIs REST para manejar la comunicación entre todos nuestros microservicios, a través de HTML. Estos microservicios serán desarrollados usando Python Flask, debido a su facilidad de uso a la hora de creación de productos web.
+Dicho esto crearemos en nuestro proyecto, tendremos APIs REST para manejar la comunicación entre todos nuestros microservicios, a través de HTTP. Estos microservicios serán desarrollados usando Python Flask, debido a su facilidad de uso a la hora de creación de productos web.
 
 Utilizaremos una API GATEWAY creada con Nginx para mantener escalabilidad y manejar las llamas a nuestros servicios. Adicionalmente el bot de telegram se comunicara con el Gateway a la hora de comunicarse con los microservicios.
 
 Los microservicios de “Gestión de Clubs”, “Gestión de Noticias” y “Gestión de Comentarios” tendrá establecida una base de datos NoSQL de MongoDB.
 
 Utilizaremos las siguientes tecnologías para los microservicios:
- * Log: X, será utilizado para mantener logs de todos los microservicios y monitorizarlos.
- * Almacenes de datos: MongoDB será usado para almacenar los datos de cada microservicio que lo necesite.
+ * Log: LogStash, será utilizado para mantener logs de todos los microservicios y monitorizarlos.
+ * Almacenes de datos: Cassandra será usado para almacenar los datos de cada microservicio que lo necesite.
  * Configuración remota: Etcd, será utilizado para guardar la información crítica del sistema.
 
 #### Comunicación entre microservicios
