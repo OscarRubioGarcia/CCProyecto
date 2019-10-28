@@ -32,7 +32,7 @@ Dicho esto crearemos en nuestro proyecto, tendremos APIs REST para manejar la co
 
 Utilizaremos una API GATEWAY creada con Nginx para mantener escalabilidad y manejar las llamas a nuestros servicios. Adicionalmente el bot de telegram se comunicara con el Gateway a la hora de comunicarse con los microservicios.
 
-Los microservicios de “Gestión de Clubs”, “Gestión de Noticias” y “Gestión de Comentarios” tendrá establecida una base de datos NoSQL de MongoDB.
+Los microservicios de “Gestión de Clubs”, “Gestión de Noticias” y “Gestión de Comentarios” tendrá establecida una base de datos NoSQL de Cassandra.
 
 Utilizaremos las siguientes tecnologías para los microservicios:
  * Log: LogStash, será utilizado para mantener logs de todos los microservicios y monitorizarlos.
