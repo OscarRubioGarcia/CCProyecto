@@ -3,3 +3,4 @@ connexion
 Flask-Injector
 Flask-RESTful
 fastavro
+invoke
