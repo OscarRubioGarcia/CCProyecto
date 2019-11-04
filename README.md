@@ -59,21 +59,24 @@ Utilizaremos las siguientes tecnologías en el proyecto:
 
 ![Microservicios]( https://raw.githubusercontent.com/OscarRubioGarcia/CCProyecto/master/docs/Representacion-microservicios-V0.7.jpg )
 
-### Herramienta de Construcción
+## Herramienta de Construcción
 
 Daremos uso de Invoke como nuestra herramienta de construcción para nuestro proyecto en Python.
 
 buildtool: tasks.py
 
-### Despliegue del proyecto
+[Descripción del fichero tasks.py]( https://github.com/OscarRubioGarcia/CCProyecto/blob/master/docs/DefinicionTasks.md )
+
+## Despliegue del proyecto
 
 Téngase en cuenta que este proyecto fue diseñado utilizando el software PyCharm para su creación y su testing local.
 
 Para el correcto funcionamiento del proyecto se deberá tener en cuenta todas las librerías especificadas en "requirements.txt" y se deberá tener una versión valida de Python instalada en el sistema (Para más información de las versiones de Python validas, véase el archivo de pruebas “.travis.yml”).
 
-### Historias de Usuario
+## Historias de Usuario
 
-Para obtener más información acerca de las historias de usuario desarrolladas para este proyecto visite el siguiente enlace: [Historias de Usuario]( https://github.com/OscarRubioGarcia/CCProyecto/blob/master/docs/UserStories.md )
+Para obtener más información acerca de las historias de usuario desarrolladas para este proyecto visite el siguiente enlace: 
+[Historias de Usuario]( https://github.com/OscarRubioGarcia/CCProyecto/blob/master/docs/UserStories.md )
 
 ## Licencia
 
