@@ -48,7 +48,7 @@ Para más informacion de los tests siguan el
 
 ## Integración Continua en la Nube
 
-Daremos uso de TravisCI para la integración continua del proyecto en el repositorio. Travis se encargará de instalar todas las librerías y lenguajes de programación que fueran necesarios en nuestro proyecto y realizara los tests desarrollados con unitTest por nosotros. Utilizando TravisCI conseguiremos comprobar el funcionamiento correcto de nuestro tests en diversas versiones de Python y monitorizar los posibles errores que puedan ocurrir. TravisCI al estar montado en la nube será perfecto para nosotros a la hora de utilizarlo para comprobar la integración continua de nuestro sistema de microservicios en la nube.
+Daremos uso de TravisCI para la integración continua del proyecto en el repositorio. Travis se encargará de instalar todas las dependencias y lenguajes de programación que fueran necesarios en nuestro proyecto y realizara los tests desarrollados con unitTest por nosotros. Utilizando TravisCI conseguiremos comprobar el funcionamiento correcto de nuestros tests en diversas versiones de Python y monitorizar los posibles errores que puedan ocurrir. TravisCI al estar montado en la nube será perfecto para nosotros a la hora de comprobar la integración continua de nuestro proyecto también en la nube.
 
 Para más informacion del archivo .travis.yml siguan el 
 [enlace a la descripción del fichero .travis.yml.]( https://github.com/OscarRubioGarcia/CCProyecto/blob/master/docs/Travis.md )
