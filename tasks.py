@@ -15,7 +15,7 @@ def build(clean=False):
     print("Test build task!")
 	
 @task
-def testNoticias(ctx):
+def testNoticiasModel(ctx):
     sys.argv.pop()
     main()
 	
