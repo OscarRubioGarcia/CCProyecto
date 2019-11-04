@@ -15,6 +15,10 @@ def build(clean=False):
     print("Test build task!")
 	
 @task
+def testAll(ctx):
+    ctx.run("python -m unittest discover tests")
+    
+@task
 def testNoticiasModel(ctx):
     sys.argv.pop()
     main()
