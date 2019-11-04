@@ -36,7 +36,22 @@ Daremos uso de Invoke como nuestra herramienta de construcción para nuestro pro
 
 buildtool: tasks.py
 
-[Descripción del fichero tasks.py]( https://github.com/OscarRubioGarcia/CCProyecto/blob/master/docs/DefinicionTasks.md )
+[Descripción del fichero tasks.py.]( https://github.com/OscarRubioGarcia/CCProyecto/blob/master/docs/DefinicionTasks.md )
+
+## Framework de Testing Local
+
+
+Con el fin de mantener la integración de nuevos módulos o cambios en nuestro proyecto, libre de fallos, utilizare el framework unitTest. Con este framework podré definir los pasos necesarios para el correcto testing de cada uno de mis microservicios, asegurándome que durante los “tests” se realizan los procesos de setUp, testing y tearDown correctamente. De esta forma estableceré un sistema de testing local que me permitirá comprobar si mis microservicios siguen siendo funcionales a medida que los incorporo o modifico.
+
+Para más informacion de los tests 
+[enlace a la descripción de los tests.]( https://github.com/OscarRubioGarcia/CCProyecto/blob/master/docs/Tests.md )
+
+## Integración Continua en la Nube
+
+Daremos uso de TravisCI para la integración continua del proyecto en el repositorio. Travis se encargará de instalar todas las librerías y lenguajes de programación que fueran necesarios en nuestro proyecto y realizara los tests desarrollados con unitTest por nosotros. Utilizando TravisCI conseguiremos comprobar el funcionamiento correcto de nuestro tests en diversas versiones de Python y monitorizar los posibles errores que puedan ocurrir. TravisCI al estar montado en la nube será perfecto para nosotros a la hora de utilizarlo para comprobar la integración continua de nuestro sistema de microservicios en la nube.
+
+Para más informacion del archivo .travis.yml 
+[enlace a la descripción del fichero .travis.yml.]( https://github.com/OscarRubioGarcia/CCProyecto/blob/master/docs/Travis.md )
 
 ## Despliegue del proyecto
 
