@@ -10,13 +10,8 @@ Esta tarea al ser ejecutada utilizando el comando ``` invoke clean ```, se encar
 
 ```
 @task
-def testNoticiasModel(ctx):
-    sys.argv.pop()
-    main()
-	
-def main():
-    import tests.testNoticiasModel
-    import unittest
-    unittest.main(module='tests.testNoticiasModel')
+def testAll(ctx):
+    ctx.run("python -m unittest discover tests")
 ```
 
+Como podemos ver en el código superior, definiremos un Task, utilizando las etiquetas proporcionadas por invoke, para poder ejecutar comandos de manera más fácil. En este ejemplo ejecutaríamos invoke testAll para realizar un testing completo de nuestro proyecto, pero sería posible limitar el alcance y especificar que tests realizar o que código 

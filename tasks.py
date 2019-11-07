@@ -9,10 +9,6 @@ def clean():
     print("Test clean task!")
 	
 @task
-def build(ctx):
-    ctx.run("pip install -r requirements.txt")
-	
-@task
 def testAll(ctx):
     ctx.run("python -m unittest discover tests")
     
