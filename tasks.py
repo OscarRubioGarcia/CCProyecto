@@ -9,10 +9,8 @@ def clean():
     print("Test clean task!")
 	
 @task
-def build(clean=False):
-    if clean:
-        print("Clean before build!")
-    print("Test build task!")
+def build(ctx):
+    ctx.run("pip install -r requirements.txt")
 	
 @task
 def testAll(ctx):
