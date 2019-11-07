@@ -41,7 +41,23 @@ Ahora definiremos un poco en más detalle, cuando sea posible, porque escogimos 
  * Para **la instalación** de dependencias, debido a que utilizaremos Python damos uso de pip para instalar todas las dependencias de nuestro proyecto, las cuales están guardadas en el archivo requirements.txt.
  * Para **el script** de ejecución de tests, utilizaremos Python para ejecutar todos los scripts de tipo unittest que puedan ser descubiertos en el directorio tests.
 
+## Modificación del archivo travis.yml el (07-11-19)
 
+Con el fin de integrar los tests de cobertura en el proyecto hemos tenido que realizar ciertos cambios en el proyecto:
+
+	```
+	install:
+	 - pip install -r requirements.txt
+	 - pip install coverage
+	# command to run tests
+	script:
+	 - coverage run -m unittest discover tests
+	# command to upload coverage file
+	after_success:
+	 - bash <(curl -s https://codecov.io/bash)
+	```
+
+Tuvimos que instalar coverage con el fin de poder ejecutar nuestros tests utilizando la herramienta de coverage. Tras la ejecución de los test y su éxito, ejecutamos un comando bash con el objetivo de notificar a codecov.io de la terminación con éxito de los tests e inicializar la creación del documento de cobertura que será utilizado por codecov para poder darnos la descripción del código cubierto por nuestros tests.
 
 
 
