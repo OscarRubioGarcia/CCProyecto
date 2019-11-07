@@ -1,7 +1,7 @@
 import os
 import unittest
  
-from Main import app, mail
+from Main import app
  
 class BasicTests(unittest.TestCase):
  
@@ -15,10 +15,6 @@ class BasicTests(unittest.TestCase):
         app.config['WTF_CSRF_ENABLED'] = False
         app.config['DEBUG'] = False
         self.app = app.test_client()
- 
-        # Disable sending emails during unit testing
-        mail.init_app(app)
-        self.assertEqual(app.debug, False)
  
     # executed after each test
     def tearDown(self):
