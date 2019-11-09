@@ -41,7 +41,6 @@ buildtool: tasks.py
 
 ## Framework de Testing Local
 
-
 Con el fin de mantener la integración de nuevos módulos o cambios en nuestro proyecto, libre de fallos, utilizare el framework unitTest. Con este framework podré definir los pasos necesarios para el correcto testing de cada uno de mis microservicios, asegurándome que durante los “tests” se realizan los procesos de setUp, testing y tearDown correctamente. De esta forma estableceré un sistema de testing local que me permitirá comprobar si mis microservicios siguen siendo funcionales a medida que los incorporo o modifico.
 
 Para más informacion de los tests siguan el 

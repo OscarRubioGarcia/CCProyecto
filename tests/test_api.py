@@ -21,13 +21,18 @@ class BasicTests(unittest.TestCase):
         pass
  
  
-###############
-#### tests ####
-###############
+	###############
+	#### tests ####
+	###############
  
     def test_main_page(self):
         response = self.app.get('/', follow_redirects=True)
         self.assertEqual(response.status_code, 200)
+
+
+	def test_main_page_error(self):
+        response = self.app.get('/error', follow_redirects=True)
+        self.assertEqual(response.status_code, 404)
  
  
 if __name__ == "__main__":
