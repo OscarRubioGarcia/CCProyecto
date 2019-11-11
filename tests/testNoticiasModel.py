@@ -8,10 +8,11 @@ class MyTestCase(unittest.TestCase):
 
     def setUp(self):
         self.noticiaPrueba = Noticia("Apertura de Nueva Cafeteria", "Nueva cafeteria siendo abierta en...",
-                                     "Campus Universitario de Granada", ["Comentario1", "Comentario2"])
+                                     "Campus Universitario de Granada")
         self.clonPrueba = Noticia("Apertura de Nueva Cafeteria", "Nueva cafeteria siendo abierta en...",
-                                  "Campus Universitario de Granada", ["Comentario1", "Comentario2"])
+                                  "Campus Universitario de Granada")
         self.comentarioPrueba = Comentario("Cuerpo comentario", "Oscar Rubio Garcia", 100)
+        self.comentarioPruebaInexsistente = Comentario("Error", "Oscar Rubio Garcia", 20)
 
     def testTipoCreacion(self):
         self.assertIsInstance(self.noticiaPrueba, Noticia, "Tipo de objeto incorrecto, no es del tipo Noticia.")
@@ -40,11 +41,6 @@ class MyTestCase(unittest.TestCase):
         self.assertEqual(self.noticiaPrueba.campus, "Nuevo Campus",
                          "El atributo campus no fue modificado correctamente.")
 
-    def testInsertarComentarioEnNoticia(self):
-        self.noticiaPrueba.addComentario("Nuevo Comentario")
-        self.assertIn("Nuevo Comentario", self.noticiaPrueba.comentarios,
-                      "No se ha agregado un comentario a la noticia correctamente.")
-
     def testInsertarComentarioEnListaComentariosNoticia(self):
         self.assertEqual(0, len(self.noticiaPrueba.listacomentarios),
                       "La noticia ya tiene comentarios (De alguna forma).")
@@ -52,15 +48,18 @@ class MyTestCase(unittest.TestCase):
         self.assertEqual(1, len(self.noticiaPrueba.listacomentarios),
                       "No se ha agregado un comentario a la noticia correctamente.")
 
-    def testEliminarComentarioDeNoticia(self):
-        self.assertEqual(len(self.noticiaPrueba.comentarios), 2,
-                         "No se han creado los comentarios correctamente.")
-        self.noticiaPrueba.deleteComentario("Comentario Inexistente")
-        self.assertEqual(len(self.noticiaPrueba.comentarios), 2,
-                         "Un error ocurrio al eliminar un comentario inexistente")
-        self.noticiaPrueba.deleteComentario("Comentario1")
-        self.assertNotIn("Comentario1", self.noticiaPrueba.comentarios,
-                         "El comentario especificado no ha sido eliminado correctamente.")
+    def testEliminarComentarioEnListaComentariosNoticia(self):
+        self.noticiaPrueba.addComentarioLista(self.comentarioPrueba)
+        self.assertEqual(1, len(self.noticiaPrueba.listacomentarios),
+                         "No se ha agregado un comentario a la noticia correctamente.")
+        self.noticiaPrueba.deleteComentarioLista(self.comentarioPrueba)
+        self.assertEqual(0, len(self.noticiaPrueba.listacomentarios),
+                         "No se ha eliminado un comentario existente de la lista correctamente.")
+
+    def testValueError(self):
+        self.assertRaises(
+            ValueError,
+            self.noticiaPrueba.deleteComentarioLista, self.comentarioPruebaInexsistente)
 
 
 if __name__ == '__main__':

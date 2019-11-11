@@ -2,11 +2,11 @@ from model.Comentario import Comentario
 
 
 class Noticia:
-    def __init__(self, titulo, descripcion, campus, comentarios):
+
+    def __init__(self, titulo="Default", descripcion="Default", campus="Default"):
         self.titulo = titulo
         self.descripcion = descripcion
         self.campus = campus
-        self.comentarios = comentarios
 
     listacomentarios = []
 
@@ -15,7 +15,6 @@ class Noticia:
             "Titulo": self.titulo,
             "Descripcion": self.descripcion,
             "Campus": self.campus,
-            "Comentarios": self.comentarios
         }
 
         return noticia
@@ -29,17 +28,18 @@ class Noticia:
     def setCampus(self, campus):
         self.campus = campus
 
-    def addComentario(self, comentario):
-        self.comentarios.append(comentario)
-
-    def deleteComentario(self, comentario):
-        if comentario in self.comentarios:
-            self.comentarios.remove(comentario)
-
     def addComentarioLista(self, comentario: Comentario):
         if not self._checkCuerpo(comentario.cuerpo):
             raise NoBodyFoundException
         self.listacomentarios.append(comentario)
+
+    def deleteComentarioLista(self, comentario: Comentario):
+        if not self._checkCuerpo(comentario.cuerpo):
+            raise NoBodyFoundException
+        try:
+            self.listacomentarios.remove(comentario)
+        except ValueError:
+            raise ValueError
 
     def _checkCuerpo(self, cuerpo) -> bool:
 
@@ -47,6 +47,14 @@ class Noticia:
             return False
 
         return True
+
+    def __eq__(self, other):
+        if not isinstance(other, Noticia):
+            return NotImplemented
+
+        return self.titulo == other.titulo and \
+               self.descripcion == other.descripcion and \
+               self.campus == other.campus
 
 
 class NoBodyFoundException(Exception):
