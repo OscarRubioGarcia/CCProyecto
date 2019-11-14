@@ -5,13 +5,23 @@ from invoke import task
 
 
 @task
-def clean(ctx):
-    print("Test clean task!")
+def active(ctx):
+    print("Invoke is Active!")
 
 
 @task
 def testAll(ctx):
     ctx.run("python -m unittest discover tests")
+    
+
+@task
+def testNews(ctx):
+    ctx.run("python -m unittest tests/testNoticiasModel.py tests/test_gestornoticias.py")
+
+
+@task
+def testNewsApi(ctx):
+    ctx.run("python -m unittest tests/test_api.py")
 
 
 @task

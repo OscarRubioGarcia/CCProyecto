@@ -16,6 +16,20 @@ def testAll(ctx):
 
 Como podemos ver en el código superior, definiremos un Task, utilizando las etiquetas proporcionadas por invoke, para poder ejecutar comandos de manera más fácil. En este ejemplo ejecutaríamos invoke testAll para realizar un testing completo de nuestro proyecto, pero sería posible limitar el alcance y especificar que tests realizar o que código 
 
+En este caso estaríamos dando uso de la función discover de unittest para buscar todos los archivos test definidos en nuestro caso en el fichero tests, pero debido a que el uso de este método no está justificado para este proyecto realizaremos unas llamadas individuales a los tests de nuestro sistema.
+
+``` python
+@task
+def testNews(ctx):
+    ctx.run("python -m unittest tests/testNoticiasModel.py tests/test_gestornoticias.py")
+
+@task
+def testNewsApi(ctx):
+    ctx.run("python -m unittest tests/test_api.py")
+```
+
+Esta sería la forma predilecta que utilizaremos para la realización del testing de nuestro sistema, especificando de esta manera los tests a realizar y pudiendo ejecutarlos independientemente de otros.
+
 ``` python
 @task
 def build(ctx):
@@ -25,3 +39,5 @@ def build(ctx):
 Esta última tarea se encargará de realizar el build de nuestro proyecto, según esta especificado en el archivo ``` setup.py ```.
 
 En un futuro podremos realizar la automatización de la generación de documentación de nuestro proyecto utilizando sphinx, rinohtype y invoke.
+
+Para más información relacionada con unittest: https://docs.python.org/3/library/unittest.html
