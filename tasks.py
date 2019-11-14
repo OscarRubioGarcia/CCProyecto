@@ -20,6 +20,11 @@ def testAllManual(ctx):
     
 
 @task
+def testAllCoverageManual(ctx):
+    ctx.run("coverage run -m unittest tests/testNoticiasModel.py tests/test_gestornoticias.py tests/test_api.py")
+ 
+
+@task
 def testNews(ctx):
     ctx.run("python -m unittest tests/testNoticiasModel.py tests/test_gestornoticias.py")
 
