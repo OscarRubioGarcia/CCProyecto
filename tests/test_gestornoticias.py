@@ -1,7 +1,7 @@
 import unittest
 
 from model.Noticia import Noticia
-from gestornoticias import GestorNoticias, NotEnoughDataInNews
+from gestor.gestornoticias import GestorNoticias, NotEnoughDataInNews
 
 
 class MyTestCase(unittest.TestCase):

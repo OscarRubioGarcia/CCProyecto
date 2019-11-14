@@ -1,7 +1,7 @@
 import os
 import unittest
 
-from Main import app
+from api.Main import app
 
 
 class BasicTests(unittest.TestCase):
