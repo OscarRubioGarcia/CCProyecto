@@ -20,8 +20,14 @@ En este caso estaríamos dando uso de la función discover de unittest para busc
 
 ``` python
 @task
+def testAllManual(ctx):
+    ctx.run("python -m unittest tests/testNoticiasModel.py tests/test_gestornoticias.py tests/test_api.py")
+    
+
+@task
 def testNews(ctx):
     ctx.run("python -m unittest tests/testNoticiasModel.py tests/test_gestornoticias.py")
+
 
 @task
 def testNewsApi(ctx):
@@ -30,6 +36,14 @@ def testNewsApi(ctx):
 
 Esta sería la forma predilecta que utilizaremos para la realización del testing de nuestro sistema, especificando de esta manera los tests a realizar y pudiendo ejecutarlos independientemente de otros.
 
+
+``` python
+@task
+def testAllCoverageManual(ctx):
+    ctx.run("coverage run -m unittest tests/testNoticiasModel.py tests/test_gestornoticias.py tests/test_api.py")
+ ```
+ 
+Adicionalmente añadiremos una task con la cual podremos saber la cobertura de nuestro proyecto y la cual podremos utilizar en conjunto con travis para automatizar los tests y la cobertura del proyecto.
 ``` python
 @task
 def build(ctx):

@@ -59,10 +59,19 @@ Con el fin de integrar los tests de cobertura en el proyecto hemos tenido que re
 
 Tuvimos que instalar coverage con el fin de poder ejecutar nuestros tests utilizando la herramienta de coverage. Tras la ejecución de los test y su éxito, ejecutamos un comando bash con el objetivo de notificar a codecov.io de la terminación con éxito de los tests e inicializar la creación del documento de cobertura que será utilizado por codecov para poder darnos la descripción del código cubierto por nuestros tests.
 
+## Modificación del archivo travis.yml el (14-11-19)
 
+Añadiremos nuestra herramienta de construcción invoke por la cual se ejecutarán los tests y el coverage.
 
-
-
-
-
+	```
+	install:
+	 - pip install -r requirements.txt
+	 - pip install coverage
+	# command to run tests
+	script:
+	 - invoke testAllCoverageManual
+	 # command to upload coverage file
+	after_success:
+	 - bash <(curl -s https://codecov.io/bash)
+	 ```
 
