@@ -12,8 +12,5 @@ install:
  - pip install coverage
 # command to run tests
 script:
- - coverage run -m unittest discover tests
-# command to upload coverage file
-after_success:
- - bash <(curl -s https://codecov.io/bash)
+ - invoke testAllManual
  

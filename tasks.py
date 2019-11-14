@@ -13,6 +13,11 @@ def active(ctx):
 def testAll(ctx):
     ctx.run("python -m unittest discover tests")
     
+    
+@task
+def testAllManual(ctx):
+    ctx.run("python -m unittest tests/testNoticiasModel.py tests/test_gestornoticias.py tests/test_api.py")
+    
 
 @task
 def testNews(ctx):
