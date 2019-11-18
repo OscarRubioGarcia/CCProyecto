@@ -1,7 +1,7 @@
 import unittest
 
-from model.Noticia import Noticia
-from model.Comentario import Comentario
+from project.model.Noticia import Noticia
+from project.model.Comentario import Comentario
 
 
 class MyTestCase(unittest.TestCase):

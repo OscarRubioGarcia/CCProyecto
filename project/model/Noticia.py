@@ -1,4 +1,4 @@
-from model.Comentario import Comentario
+from project.model.Comentario import Comentario
 
 
 class Noticia:

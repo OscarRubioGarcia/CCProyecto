@@ -1,6 +1,6 @@
 from typing import List
 
-from model.Noticia import Noticia
+from project.model.Noticia import Noticia
 
 
 class GestorNoticias(object):

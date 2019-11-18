@@ -11,27 +11,27 @@ def active(ctx):
 
 @task
 def testAll(ctx):
-    ctx.run("python -m unittest discover tests")
+    ctx.run("python -m unittest discover project/tests")
     
     
 @task
 def testAllManual(ctx):
-    ctx.run("python -m unittest tests/testNoticiasModel.py tests/test_gestornoticias.py tests/test_api.py")
+    ctx.run("python -m unittest project/tests/testNoticiasModel.py project/tests/test_gestornoticias.py project/tests/test_api.py")
     
 
 @task
 def testAllCoverageManual(ctx):
-    ctx.run("coverage run -m unittest tests/testNoticiasModel.py tests/test_gestornoticias.py tests/test_api.py")
+    ctx.run("coverage run -m unittest project/tests/testNoticiasModel.py project/tests/test_gestornoticias.py project/tests/test_api.py")
  
 
 @task
 def testNews(ctx):
-    ctx.run("python -m unittest tests/testNoticiasModel.py tests/test_gestornoticias.py")
+    ctx.run("python -m unittest project/tests/testNoticiasModel.py project/tests/test_gestornoticias.py")
 
 
 @task
 def testNewsApi(ctx):
-    ctx.run("python -m unittest tests/test_api.py")
+    ctx.run("python -m unittest project/tests/test_api.py")
 
 
 @task
