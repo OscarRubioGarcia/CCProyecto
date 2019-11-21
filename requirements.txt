@@ -1,5 +1,4 @@
 Flask
-connexion
 Flask-Injector
 Flask-RESTful
 invoke

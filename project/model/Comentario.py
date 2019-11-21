@@ -1,7 +1,6 @@
-
 class Comentario:
 
-    def __init__(self,cuerpo,usuario, puntuacion):
+    def __init__(self, cuerpo, usuario, puntuacion):
         self.cuerpo = cuerpo
         self.usuario = usuario
         self.puntuacion = puntuacion
@@ -15,11 +14,18 @@ class Comentario:
 
         return comentario
 
-    def setCuerpo(self,cuerpo):
-        self.cuerpo=cuerpo
+    def setCuerpo(self, cuerpo):
+        self.cuerpo = cuerpo
 
-    def setUsuario(self,usuario):
-        self.usuario=usuario
+    def setUsuario(self, usuario):
+        self.usuario = usuario
 
-    def setPuntuacion(self,puntuacion):
-        self.puntuacion=puntuacion
+    def setPuntuacion(self, puntuacion):
+        self.puntuacion = puntuacion
+
+    def serialize(self):
+        return {
+            'cuerpo': self.cuerpo,
+            'usuario': self.usuario,
+            'puntuacion': self.puntuacion
+        }

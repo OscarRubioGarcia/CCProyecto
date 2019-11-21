@@ -5,7 +5,14 @@ from project.model.Noticia import Noticia
 
 class GestorNoticias(object):
 
+    noticiastest1 = Noticia("Titulo Noticia", "Descripcion Noticia", "UGR")
+    noticiastest2 = Noticia("Noticia2", "Descripcion detallada de noticia2", "UGR")
+
     listanoticias = []
+    listanoticiastestapi = [
+        noticiastest1,
+        noticiastest2,
+    ]
 
     def __init__(self):
         self.listanoticias.clear()

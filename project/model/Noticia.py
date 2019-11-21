@@ -56,6 +56,14 @@ class Noticia:
                self.descripcion == other.descripcion and \
                self.campus == other.campus
 
+    def serialize(self):
+        return {
+            'titulo': self.titulo,
+            'descripcion': self.descripcion,
+            'campus': self.campus,
+            'comentarios': [e.serialize() for e in self.listacomentarios]
+        }
+
 
 class NoBodyFoundException(Exception):
     pass
