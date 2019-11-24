@@ -59,11 +59,12 @@ Inicialmente diseñe un archivo Docker sencillo con alpine, debido a ser esta un
 Adicionalmente realizamos la subida del Docker tanto a Docker hub como a un repositorio creado en Heroku, a través del cual podemos comprobar el correcto comportamiento de la imagen Docker.
 
 Contenedor: https://newdashboardapi.herokuapp.com/news
+
 Contenedor en DockerHub: https://hub.docker.com/repository/docker/oscarrubiogarcia/proyectoccdocker
 
-Contenido del fichero Dockerfile:
+**Contenido del fichero Dockerfile:**
 
-´´´python
+```python
 FROM python:3.7-alpine
 WORKDIR /code
 
