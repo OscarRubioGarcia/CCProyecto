@@ -53,6 +53,29 @@ Daremos uso de TravisCI para la integración continua del proyecto en el reposit
 Para más informacion del archivo .travis.yml siguan el 
 [enlace a la descripción del fichero .travis.yml.]( https://github.com/OscarRubioGarcia/CCProyecto/blob/master/docs/Travis.md )
 
+## Docker del proyecto
+
+Inicialmente diseñe un archivo Docker sencillo con alpine, debido a ser esta una de las opciones mas populares y a ser un sistema bastante ligero. 
+Adicionalmente realizamos la subida del Docker tanto a Docker hub como a un repositorio creado en Heroku, a través del cual podemos comprobar el correcto comportamiento de la imagen Docker.
+
+Contenedor: https://newdashboardapi.herokuapp.com/news
+Contenedor en DockerHub: https://hub.docker.com/repository/docker/oscarrubiogarcia/proyectoccdocker
+
+Contenido del fichero Dockerfile:
+
+´´´python
+FROM python:3.7-alpine
+WORKDIR /code
+
+COPY requirements.txt requirements.txt
+RUN pip install -r requirements.txt
+COPY . /code
+
+CMD ["python", "project/Main.py"]
+```
+
+Para más información con relación a la creación de la imagen Docker, del archivo dockerfile creado o del archivo heroku.yml pueden seguir [el enlace a la descripción del dockerfile.]( https://github.com/OscarRubioGarcia/CCProyecto/blob/master/docs/Docker.md )
+
 ## Despliegue del proyecto
 
 Téngase en cuenta que este proyecto fue diseñado utilizando el software PyCharm para su creación y su testing local.
