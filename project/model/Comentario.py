@@ -1,6 +1,6 @@
 class Comentario:
 
-    def __init__(self, cuerpo, usuario, puntuacion):
+    def __init__(self, cuerpo="Default", usuario="Default", puntuacion=100):
         self.cuerpo = cuerpo
         self.usuario = usuario
         self.puntuacion = puntuacion

@@ -1,7 +1,6 @@
-import os
 import unittest
 
-from project.Main import app
+from app import app
 
 
 class BasicTests(unittest.TestCase):
@@ -28,6 +27,10 @@ class BasicTests(unittest.TestCase):
     def test_gestor_news(self):
         response = self.app.get('/news', follow_redirects=True, content_type='application/json')
         print(response.get_json())
+        self.assertEqual(response.get_json(), {'news': [{'campus': 'UGR', 'comentarios': [],
+                                                         'descripcion': 'Descripcion Noticia', 'titulo': 'Titulo Noticia'},
+                                                        {'campus': 'UGR', 'comentarios': [], 'descripcion': 'Descripcion detallada de noticia2',
+                                                         'titulo': 'Noticia2'}]})
 
 
 if __name__ == "__main__":

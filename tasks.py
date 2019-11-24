@@ -35,5 +35,10 @@ def testNewsApi(ctx):
 
 
 @task
+def runNews(ctx):
+    ctx.run("python app.py")
+
+
+@task
 def build(ctx):
     ctx.run("python setup.py build")

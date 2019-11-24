@@ -61,6 +61,5 @@ class MyTestCase(unittest.TestCase):
             ValueError,
             self.noticiaPrueba.deleteComentarioLista, self.comentarioPruebaInexsistente)
 
-
 if __name__ == '__main__':
     unittest.main()

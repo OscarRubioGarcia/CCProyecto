@@ -7,6 +7,7 @@ class Noticia:
         self.titulo = titulo
         self.descripcion = descripcion
         self.campus = campus
+        self.listacomentarios = []
 
     listacomentarios = []
 
