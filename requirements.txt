@@ -3,3 +3,4 @@ Flask-Injector
 Flask-RESTful
 invoke
 coverage
+gunicorn

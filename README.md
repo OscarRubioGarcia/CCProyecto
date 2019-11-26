@@ -55,27 +55,40 @@ Para más informacion del archivo .travis.yml siguan el
 
 ## Docker del proyecto
 
-Inicialmente diseñe un archivo Docker sencillo con alpine, debido a ser esta una de las opciones mas populares y a ser un sistema bastante ligero. 
-Adicionalmente realizamos la subida del Docker tanto a Docker hub como a un repositorio creado en Heroku, a través del cual podemos comprobar el correcto comportamiento de la imagen Docker.
+Realicé diversos experimentos utilizando los contenedores Docker y varios sistemas operativos con la finalidad de conseguir un Docker con el mínimo tamaño, estos experimentos pueden verse en el siguiente [directorio.]( https://github.com/OscarRubioGarcia/CC/tree/master/example) La experimentación de estos archivos Docker puede ser encontrada al final de este apartado.
 
-Contenedor: https://newdashboardapi.herokuapp.com/news
-
-Contenedor en DockerHub: https://hub.docker.com/repository/docker/oscarrubiogarcia/proyectoccdocker
+Procedí a diseñar un archivo Docker sencillo con alpine, debido a ser esta una de las opciones más populares y a que mi experimentación me llevo a concluir que esta era la imagen más ligera.
 
 **Contenido del fichero Dockerfile:**
 
 ```python
-FROM python:3.7-alpine
+FROM alpine:3.10
+MAINTAINER Oscar Rubio Garcia 
+
 WORKDIR /code
 
-COPY requirements.txt requirements.txt
+RUN apk update && apk upgrade 
+RUN apk add --update py-pip
+RUN apk add linux-headers python3 py3-virtualenv
+
+ENV VIRTUAL_ENV=/opt/venv
+RUN python3 -m virtualenv --python=/usr/bin/python3 $VIRTUAL_ENV
+ENV PATH="$VIRTUAL_ENV/bin:$PATH"
+
+COPY requirements-img.txt requirements.txt
 RUN pip install -r requirements.txt
 COPY . /code
 
-CMD ["python", "project/Main.py"]
+CMD [ "python", "app.py" ]
 ```
 
-Para más información con relación a la creación de la imagen Docker, del archivo dockerfile creado o del archivo heroku.yml pueden seguir [el enlace a la descripción del dockerfile.]( https://github.com/OscarRubioGarcia/CCProyecto/blob/master/docs/Docker.md )
+Adicionalmente realicé la subida del Docker tanto a Docker hub como a un repositorio creado en Heroku, a través del cual podemos comprobar el correcto comportamiento de la imagen Docker.
+
+Contenedor: https://hub.docker.com/r/oscarrubiogarcia/proyectoccdocker/tags
+
+Contenedor en Heroku: https://newdashboardapi.herokuapp.com/news
+
+Para más información con relación a la experimentación realizada y la creación de la imagen Docker, tanto el archivo dockerfile creado o el archivo heroku.yml, pueden seguir [el enlace a la descripción del dockerfile.]( https://github.com/OscarRubioGarcia/CCProyecto/blob/master/docs/Docker.md )
 
 ## Despliegue del proyecto
 
