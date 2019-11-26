@@ -1,6 +1,12 @@
 # Dockerfile
 
-Los experimentos con los diferentes tipos de Docker nos dejaron las siguientes conclusiones, los Docker creados con Python-alpine o python-slim-buster contienen el mínimo de espacio necesario para el correcto funcionamiento de nuestro sistema. La creación de un Docker con alpine y Python por separado nos dio una imagen demasiado pesada debido a la cantidad de programas adicionales instalados. La imagen creada utilizando el sistema operativo fedora fue bastante ligero en comparación con las imágenes creadas utilizando pyhon-alpine y Python-slim-buster. La imagen final creada utilizando el código obtenido del siguiente [enlace]( https://github.com/pyenv/pyenv/issues/1229), nos proporcionaba la creación de una imagen del SO alpine y una instalación de la versión Python 3.7, pero no creaba una imagen tan ligera como las otras.
+Los experimentos con los diferentes tipos de Docker nos dejaron las siguientes conclusiones, los Docker creados con Python-alpine o python-slim-buster contienen el mínimo de espacio necesario para el correcto funcionamiento de nuestro sistema. 
+
+La creación de un Docker con alpine, instalando python unicamente, nos dio una imagen muy ligera, que aunque no llegaba a tener tan poco peso como python-alpine era bastante aceptable. 
+
+La imagen creada utilizando el sistema operativo fedora fue bastante ligera en comparación con las imágenes creadas utilizando pyhon-alpine y Python-slim-buster. 
+
+La imagen final creada utilizando el código obtenido del siguiente [enlace]( https://github.com/pyenv/pyenv/issues/1229), nos proporcionaba la creación de una imagen del SO alpine y una instalación de la versión Python 3.7, pero no creaba una imagen tan ligera como las otras, debido a la instalación de programas adicionales innecesarios para nuestro proyecto.
 
 Podemos observar los resultados obtenidos de la experimentación en la siguiente imagen:
 ![Pesos Dockers]( https://raw.githubusercontent.com/OscarRubioGarcia/CC/blob/master/example/Docker-pesos.jpg)
