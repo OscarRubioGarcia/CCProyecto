@@ -61,7 +61,7 @@ Procedí a diseñar un archivo Docker sencillo con alpine, debido a ser esta una
 
 **Contenido del fichero Dockerfile:**
 
-```python
+```
 FROM alpine:3.10
 MAINTAINER Oscar Rubio Garcia 
 

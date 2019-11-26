@@ -6,8 +6,6 @@ La creación de un Docker con alpine, instalando python unicamente, nos dio una 
 
 La imagen creada utilizando el sistema operativo fedora fue bastante ligera en comparación con las imágenes creadas utilizando pyhon-alpine y Python-slim-buster. 
 
-La imagen final creada utilizando el código obtenido del siguiente [enlace]( https://github.com/pyenv/pyenv/issues/1229), nos proporcionaba la creación de una imagen del SO alpine y una instalación de la versión Python 3.7, pero no creaba una imagen tan ligera como las otras, debido a la instalación de programas adicionales innecesarios para nuestro proyecto.
-
 Podemos observar los resultados obtenidos de la experimentación en la siguiente imagen:
 ![Pesos Dockers]( https://raw.githubusercontent.com/OscarRubioGarcia/CC/blob/master/example/Docker-pesos.jpg)
 
@@ -15,7 +13,7 @@ Procedí a diseñar un archivo Docker sencillo con alpine, debido a ser esta una
 
 Explicaremos el contenido del Docker a continuación:
 
-```python
+```
 FROM alpine:3.10
 MAINTAINER Oscar Rubio Garcia 
 
