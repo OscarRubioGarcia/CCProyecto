@@ -53,7 +53,7 @@ Comprobamos la creación y tamaño de nuestra imagen Docker utilizando:
 
 * Docker image ls
 
-En nuestro caso el Docker fue creado con un tamaño de 173MB. 
+En nuestro caso el Docker fue creado con un tamaño de 179MB. 
 
 Procedemos a probar el correcto comportamiento del docker:
 
