@@ -11,7 +11,7 @@ La imagen final creada utilizando el código obtenido del siguiente [enlace]( ht
 Podemos observar los resultados obtenidos de la experimentación en la siguiente imagen:
 ![Pesos Dockers]( https://raw.githubusercontent.com/OscarRubioGarcia/CC/blob/master/example/Docker-pesos.jpg)
 
-Procedí a diseñar un archivo Docker sencillo con alpine, debido a ser esta una de las opciones más populares y a que mi experimentación me llevo a concluir que esta era la imagen más ligera. 
+Procedí a diseñar un archivo Docker sencillo con alpine, debido a ser esta una de las opciones más populares y a que mi experimentación me llevo a concluir que esta era una de las imagenes más ligeras, adicionalmente me gusto tener la posibilidad de actualizar el software y establecer el entorno de python manualmente.
 
 Explicaremos el contenido del Docker a continuación:
 
@@ -33,7 +33,7 @@ COPY requirements-img.txt requirements.txt
 RUN pip install -r requirements.txt
 COPY . /code
 
-CMD [ "python", "app.py" ]
+CMD [ "invoke", "runPython" ]
 ```
 
 Para empezar, establecemos la imagen utilizada a ser una imagen que contenga en este caso el sistema alpine. Después definimos el entorno de trabajo en la imagen Docker que crearemos, en este caso el entorno será el directorio /code, adicionalmente estableceremos el maintainer del Docker siendo yo como autor.
@@ -44,7 +44,7 @@ Tras instalar python3 procedemos a asegurarnos que el entorno del entorno virtua
 
 A continuación, empezamos el proceso de creación de la imagen Docker, copiamos el archivo de requirements-img.txt de nuestro proyecto, el cual contiene solamente las dependencias necesarias a instalar en la imagen Docker para que funcione el proyecto, a un archivo requirements.txt en la imagen Docker. Proseguimos utilizando pip para instalar todas las dependencias del archivo requirements.txt en la imagen Docker. Despues, copiamos el resto de los archivos del proyecto en el directorio /code que creamos anteriormente.
 
-El paso final será la utilización del comando cmd para inicializar el microservicio, utilizamos Python app.py para ejecutar el archivo Python en la imagen del Docker e inicializar el proyecto.
+El paso final será la utilización del comando cmd para inicializar el microservicio, utilizamos nuestra herramienta de construccion invoke para invokar Python app.py para ejecutar el archivo Python en la imagen del Docker e inicializar el proyecto. De esta forma podremos ejecutar comandos de nuestra herramienta de construcción en el Docker.
 
 Tras la creación del archivo Docker procedimos a su generación, despliegue y subida a Docker Hub utilizando los siguientes comandos:
 * Docker image build . -t microservicionews:1.4
@@ -67,7 +67,7 @@ Este comando se encarga de ejecutar el Docker que especificamos como microservic
 
 Realizamos un login en el servidor de Docker hub, con el fin de tener los permisos necesarios para realizar la subida de la imagen al repositorio previamente creado.
 
-* Docker push oscarrubiogarcia/proyectoccdocker:microservicionews
+* Docker push oscarrubiogarcia/proyectoccdocker:microservicionews-v1.2-invoke
 
 Comando utilizado para subir la imagen especificada como microservicionews al repositorio oscarrubiogarcia/proyectoccdocker. Destacaremos que previamente realizamos el comando Docker tag para cambiar el nombre de nuestro Docker.
 

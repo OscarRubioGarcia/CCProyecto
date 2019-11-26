@@ -42,3 +42,8 @@ def runNews(ctx):
 @task
 def build(ctx):
     ctx.run("python setup.py build")
+
+	
+@task
+def runPython(ctx):
+    ctx.run("python app.py")

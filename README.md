@@ -57,7 +57,7 @@ Para más informacion del archivo .travis.yml siguan el
 
 Realicé diversos experimentos utilizando los contenedores Docker y varios sistemas operativos con la finalidad de conseguir un Docker con el mínimo tamaño, estos experimentos pueden verse en el siguiente [directorio.]( https://github.com/OscarRubioGarcia/CC/tree/master/example) La experimentación de estos archivos Docker puede ser encontrada al final de este apartado.
 
-Procedí a diseñar un archivo Docker sencillo con alpine, debido a ser esta una de las opciones más populares y a que mi experimentación me llevo a concluir que esta era la imagen más ligera.
+Procedí a diseñar un archivo Docker sencillo con alpine, debido a ser esta una de las opciones más populares y a que mi experimentación me llevo a concluir que esta era una de las imagenes más ligeras, adicionalmente me gusto tener la posibilidad de actualizar el software y establecer el entorno de python manualmente.
 
 **Contenido del fichero Dockerfile:**
 
@@ -79,7 +79,7 @@ COPY requirements-img.txt requirements.txt
 RUN pip install -r requirements.txt
 COPY . /code
 
-CMD [ "python", "app.py" ]
+CMD [ "invoke", "runPython" ]
 ```
 
 Adicionalmente realicé la subida del Docker tanto a Docker hub como a un repositorio creado en Heroku, a través del cual podemos comprobar el correcto comportamiento de la imagen Docker.
