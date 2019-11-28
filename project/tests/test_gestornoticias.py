@@ -7,7 +7,7 @@ from project.gestor.gestornoticias import GestorNoticias, NotEnoughDataInNews
 class MyTestCase(unittest.TestCase):
 
     def setUp(self):
-        self.noticiaPrueba = Noticia("Apertura de Nueva Cafeteria", "Nueva cafeteria siendo abierta en...",
+        self.noticiaPrueba = Noticia(1, "Apertura de Nueva Cafeteria", "Nueva cafeteria siendo abierta en...",
                                      "Campus Universitario de Granada")
         self.noticiaVacia = Noticia()
         self.gestorNoticias = GestorNoticias()
@@ -57,7 +57,7 @@ class MyTestCase(unittest.TestCase):
     def testExcepcionNoticiaNoValida(self):
         self.assertRaises(
             NotEnoughDataInNews,
-            self.gestorNoticias.getNoticia, self.noticiaVacia)
+            self.gestorNoticias.getNoticia, self.noticiaVacia.id)
 
     def testGetNoticiaValida(self):
         self.assertEqual(len(self.gestorNoticias.listanoticias), 0,
@@ -65,7 +65,7 @@ class MyTestCase(unittest.TestCase):
         self.gestorNoticias.addNoticia(self.noticiaPrueba)
         self.assertEqual(len(self.gestorNoticias.listanoticias), 1,
                          "A ocurrido un error al añadir una noticia valida")
-        found = self.gestorNoticias.getNoticia("Apertura de Nueva Cafeteria")
+        found = self.gestorNoticias.getNoticia(1)
         self.assertIsInstance(found, Noticia,
                               "Tipo de objeto incorrecto, no es del tipo Noticia.")
         self.assertEqual(found, self.noticiaPrueba)

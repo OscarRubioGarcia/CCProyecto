@@ -3,7 +3,7 @@ import os
 from flask import Flask
 from flask_restful import Api, abort, reqparse, Resource
 from flask import jsonify
-from project.gestor.gestornoticias import GestorNoticias
+from project.gestor.gestornoticias import GestorNoticias, NotEnoughDataInNews
 
 gestorNoticias = GestorNoticias()
 
@@ -22,6 +22,22 @@ class Main(Resource):
 
 
 class News(Resource):
+    def get(self, id):
+        response = []
+        if id is not None:
+            try:
+                noticia = gestorNoticias.getNoticia(int(id))
+            except NotEnoughDataInNews:
+                noticia = None
+            if noticia is not None:
+                response.append(noticia.serialize())
+            else:
+                response.append({'no news found with id': id})
+            return jsonify({'news': response})
+        else:
+            return jsonify({'news': {'no news found with id': id}})
+
+class NewsList(Resource):
     def get(self):
         response = []
         for n in gestorNoticias.listanoticiastestapi:
@@ -29,9 +45,9 @@ class News(Resource):
         return jsonify({'news': response})
 
 
-api.add_resource(Main,'/','/status')
-api.add_resource(News,'/news')
-
+api.add_resource(Main, '/', '/status')
+api.add_resource(News, '/news/<id>')
+api.add_resource(NewsList, '/news')
 
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", 5000))

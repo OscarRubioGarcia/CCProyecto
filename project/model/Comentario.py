@@ -1,12 +1,14 @@
 class Comentario:
 
-    def __init__(self, cuerpo="Default", usuario="Default", puntuacion=100):
+    def __init__(self, id=0, cuerpo="Default", usuario="Default", puntuacion=101):
+        self.id = id
         self.cuerpo = cuerpo
         self.usuario = usuario
         self.puntuacion = puntuacion
 
     def __dict__(self):
         comentario = {
+            "Id" : self.id,
             "Cuerpo": self.cuerpo,
             "Usuario": self.usuario,
             "Puntuacion": self.puntuacion,
@@ -25,6 +27,7 @@ class Comentario:
 
     def serialize(self):
         return {
+            'id': self.id,
             'cuerpo': self.cuerpo,
             'usuario': self.usuario,
             'puntuacion': self.puntuacion

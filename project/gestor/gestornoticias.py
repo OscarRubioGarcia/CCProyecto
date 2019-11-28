@@ -5,8 +5,8 @@ from project.model.Noticia import Noticia
 
 class GestorNoticias(object):
 
-    noticiastest1 = Noticia("Titulo Noticia", "Descripcion Noticia", "UGR")
-    noticiastest2 = Noticia("Noticia2", "Descripcion detallada de noticia2", "UGR")
+    noticiastest1 = Noticia(1, "Titulo Noticia", "Descripcion Noticia", "UGR")
+    noticiastest2 = Noticia(2, "Noticia2", "Descripcion detallada de noticia2", "UGR")
 
     listanoticias = []
     listanoticiastestapi = [
@@ -28,13 +28,12 @@ class GestorNoticias(object):
             raise NotEnoughDataInNews
         self.listanoticias.remove(noticia)
 
-    def getNoticia(self, tituloNoticia: str) -> Noticia:
+    def getNoticia(self, id: int) -> Noticia:
         found = None
         for x in self.listanoticias:
-            if x.titulo == tituloNoticia:
+            if x.id == id:
                 found = x
                 break
-
         if not self._checkEnoughData(found):
             raise NotEnoughDataInNews
 
@@ -42,11 +41,15 @@ class GestorNoticias(object):
 
     def _checkEnoughData(self, noticia: Noticia) -> bool:
 
+        if not hasattr(noticia, "id"):
+            return False
         if not hasattr(noticia, "titulo"):
             return False
         if not hasattr(noticia, "descripcion"):
             return False
         if not hasattr(noticia, "campus"):
+            return False
+        if noticia.id.__eq__(0):
             return False
         if noticia.titulo.__eq__("Default"):
             return False

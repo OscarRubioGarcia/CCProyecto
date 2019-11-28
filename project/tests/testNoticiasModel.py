@@ -7,12 +7,12 @@ from project.model.Comentario import Comentario
 class MyTestCase(unittest.TestCase):
 
     def setUp(self):
-        self.noticiaPrueba = Noticia("Apertura de Nueva Cafeteria", "Nueva cafeteria siendo abierta en...",
+        self.noticiaPrueba = Noticia(0, "Apertura de Nueva Cafeteria", "Nueva cafeteria siendo abierta en...",
                                      "Campus Universitario de Granada")
-        self.clonPrueba = Noticia("Apertura de Nueva Cafeteria", "Nueva cafeteria siendo abierta en...",
+        self.clonPrueba = Noticia(0, "Apertura de Nueva Cafeteria", "Nueva cafeteria siendo abierta en...",
                                   "Campus Universitario de Granada")
-        self.comentarioPrueba = Comentario("Cuerpo comentario", "Oscar Rubio Garcia", 100)
-        self.comentarioPruebaInexsistente = Comentario("Error", "Oscar Rubio Garcia", 20)
+        self.comentarioPrueba = Comentario(0, "Cuerpo comentario", "Oscar Rubio Garcia", 100)
+        self.comentarioPruebaInexsistente = Comentario(0, "Error", "Oscar Rubio Garcia", 20)
 
     def testTipoCreacion(self):
         self.assertIsInstance(self.noticiaPrueba, Noticia, "Tipo de objeto incorrecto, no es del tipo Noticia.")
@@ -43,10 +43,10 @@ class MyTestCase(unittest.TestCase):
 
     def testInsertarComentarioEnListaComentariosNoticia(self):
         self.assertEqual(0, len(self.noticiaPrueba.listacomentarios),
-                      "La noticia ya tiene comentarios (De alguna forma).")
+                         "La noticia ya tiene comentarios (De alguna forma).")
         self.noticiaPrueba.addComentarioLista(self.comentarioPrueba)
         self.assertEqual(1, len(self.noticiaPrueba.listacomentarios),
-                      "No se ha agregado un comentario a la noticia correctamente.")
+                         "No se ha agregado un comentario a la noticia correctamente.")
 
     def testEliminarComentarioEnListaComentariosNoticia(self):
         self.noticiaPrueba.addComentarioLista(self.comentarioPrueba)
@@ -60,6 +60,7 @@ class MyTestCase(unittest.TestCase):
         self.assertRaises(
             ValueError,
             self.noticiaPrueba.deleteComentarioLista, self.comentarioPruebaInexsistente)
+
 
 if __name__ == '__main__':
     unittest.main()

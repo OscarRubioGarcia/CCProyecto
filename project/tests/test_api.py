@@ -24,13 +24,16 @@ class BasicTests(unittest.TestCase):
         response = self.app.get('/error', follow_redirects=True)
         self.assertEqual(response.status_code, 404)
 
-    def test_gestor_news(self):
+    def test_gestor_news_get(self):
         response = self.app.get('/news', follow_redirects=True, content_type='application/json')
-        print(response.get_json())
-        self.assertEqual(response.get_json(), {'news': [{'campus': 'UGR', 'comentarios': [],
-                                                         'descripcion': 'Descripcion Noticia', 'titulo': 'Titulo Noticia'},
-                                                        {'campus': 'UGR', 'comentarios': [], 'descripcion': 'Descripcion detallada de noticia2',
-                                                         'titulo': 'Noticia2'}]})
+        self.assertEqual(response.get_json(), {'news': [{'campus': 'UGR', 'comentarios': [], 'descripcion': 'Descripcion Noticia', 'id': 1, 'titulo': 'Titulo Noticia'},
+                                                        {'campus': 'UGR', 'comentarios': [], 'descripcion': 'Descripcion detallada de noticia2', 'id': 2, 'titulo': 'Noticia2'}]})
+
+    def test_gestor_news_put(self):
+        data = {'id': 1}
+        headers = {'content-type': 'application/json'}
+        response = self.app.get('/news/1', follow_redirects=True, content_type='application/json')
+        self.assertEqual(response.get_json(), {'news': [{'no news found with id': '1'}]})
 
 
 if __name__ == "__main__":

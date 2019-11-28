@@ -1,4 +1,3 @@
-
 import sys
 
 from invoke import task
@@ -12,17 +11,19 @@ def active(ctx):
 @task
 def testAll(ctx):
     ctx.run("python -m unittest discover project/tests")
-    
-    
+
+
 @task
-def testAllManual(ctx):
-    ctx.run("python -m unittest project/tests/testNoticiasModel.py project/tests/test_gestornoticias.py project/tests/test_api.py")
-    
+def testNewsManual(ctx):
+    ctx.run(
+        "python -m unittest project/tests/testNoticiasModel.py project/tests/test_gestornoticias.py project/tests/test_api.py")
+
 
 @task
 def testAllCoverageManual(ctx):
-    ctx.run("coverage run -m unittest project/tests/testNoticiasModel.py project/tests/test_gestornoticias.py project/tests/test_api.py")
- 
+    ctx.run(
+        "coverage run -m unittest project/tests/testNoticiasModel.py project/tests/test_gestornoticias.py project/tests/test_api.py")
+
 
 @task
 def testNews(ctx):
@@ -43,7 +44,12 @@ def runNews(ctx):
 def build(ctx):
     ctx.run("python setup.py build")
 
-	
+
 @task
 def runPython(ctx):
     ctx.run("python app.py")
+
+
+@task
+def runGunicorn(ctx):
+    ctx.run("gunicorn -b 0.0.0.0:5000 app:api --reload")
