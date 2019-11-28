@@ -19,9 +19,7 @@ MAINTAINER Oscar Rubio Garcia
 
 WORKDIR /code
 
-RUN apk update && apk upgrade 
-RUN apk add --update py-pip
-RUN apk add linux-headers python3 py3-virtualenv
+RUN apk update && apk upgrade && apk add py-pip linux-headers python3 py3-virtualenv bash
 
 ENV VIRTUAL_ENV=/opt/venv
 RUN python3 -m virtualenv --python=/usr/bin/python3 $VIRTUAL_ENV
@@ -34,11 +32,11 @@ COPY . /code
 CMD [ "invoke", "runPython" ]
 ```
 
-Para empezar, establecemos la imagen utilizada a ser una imagen que contenga en este caso el sistema alpine. Después definimos el entorno de trabajo en la imagen Docker que crearemos, en este caso el entorno será el directorio /code, adicionalmente estableceremos el maintainer del Docker siendo yo como autor.
+Para empezar, establecemos la imagen utilizada a ser una imagen que contenga en este caso el sistema alpine, en nuestro caso decidimos usar la versión más actualizada de alpine, está siendo la versión 3.10. Después definimos el entorno de trabajo en la imagen Docker que crearemos, en este caso el entorno será el directorio /code, adicionalmente estableceremos el maintainer del Docker siendo yo como autor.
 
-Procedemos con la fase de preparación de la imagen Docker, aquí nos aseguramos de que el sistema esta actualizado y al día, tras actualizar el sistema procedemos a la instalación de aquellos programas indispensables para el correcto funcionamiento de nuestro microservicio. En nuestro caso instalaremos pip, las cabeceras de linux para prevenir errores y python3 con su entorno.
+Procedemos con la fase de preparación de la imagen Docker, aquí nos aseguramos de que el sistema esta actualizado y al día, tras actualizar el sistema procedemos a la instalación de aquellos programas indispensables para el correcto funcionamiento de nuestro microservicio. En nuestro caso instalaremos pip, las cabeceras de linux para prevenir errores, python3 con su entorno virtual y bash para poder dar uso de nuestra herramienta de construcción invoke.
 
-Tras instalar python3 procedemos a asegurarnos que el entorno del entorno virtual de python es configurado correctamente con el fin de evitar posibles errores debidos a la falta de módulos. Este apartado fue desarrollado gracias al tutorial proporcionado en este [enlace.](https://pythonspeed.com/articles/activate-virtualenv-dockerfile/)
+Tras instalar python3 procedemos a asegurarnos que el entorno del entorno virtual de python es configurado correctamente con el fin de evitar posibles errores debidos a la falta de módulos. Este apartado fue desarrollado gracias al tutorial proporcionado en este [enlace.](https://pythonspeed.com/articles/activate-virtualenv-dockerfile/) Básicamente lo que realizamos es el establecimiento de las variables de entorno de Python 3 en nuestra imagen Docker y asignando el correcto PATH, de esta forma permitiendo la ejecución de comandos Python desde los comandos CMD y RUN, si fuera necesario.
 
 A continuación, empezamos el proceso de creación de la imagen Docker, copiamos el archivo de requirements-img.txt de nuestro proyecto, el cual contiene solamente las dependencias necesarias a instalar en la imagen Docker para que funcione el proyecto, a un archivo requirements.txt en la imagen Docker. Proseguimos utilizando pip para instalar todas las dependencias del archivo requirements.txt en la imagen Docker. Despues, copiamos el resto de los archivos del proyecto en el directorio /code que creamos anteriormente.
 
@@ -55,17 +53,27 @@ Comprobamos la creación y tamaño de nuestra imagen Docker utilizando:
 
 En nuestro caso el Docker fue creado con un tamaño de 179MB. 
 
+adicionalmente podríamos comprobar el numero de capas de nuestra imagen utilizando el siguiente comando:
+
+* Docker history microservicionews:1.4
+
+En nuestro caso comprobamos que tenernos 12 capas, 2 capas al principio que se combinan juntas debido a que forman parte del mismo comando, FROM alpine:3.10
+
 Procedemos a probar el correcto comportamiento del docker:
 
 * Docker container run –-publish 5000:5000 microservicionews:1.4
 
-Este comando se encarga de ejecutar el Docker que especificamos como microservicionews:1.3 y de publicarlo al puerto 5000:5000, que es el puerto por predefinido que estamos utilizando con Python flask.
+Este comando se encarga de ejecutar el Docker que especificamos como microservicionews:1.4 y de publicarlo al puerto 5000:5000, que es el puerto por predefinido que estamos utilizando con Python flask.
 
 * Docker login
 
 Realizamos un login en el servidor de Docker hub, con el fin de tener los permisos necesarios para realizar la subida de la imagen al repositorio previamente creado.
 
-* Docker push oscarrubiogarcia/proyectoccdocker:microservicionews-v1.2-invoke
+* Docker tag microservicionews:1.4 oscarrubiogarcia/proyectoccdocker:microservicionews-v1.3-invoke
+
+Cambiamos el tag de nuestra imagen para ser subida correctamente al repositorio de Docker Hub,
+
+* Docker push oscarrubiogarcia/proyectoccdocker:microservicionews-v1.3-invoke
 
 Comando utilizado para subir la imagen especificada como microservicionews al repositorio oscarrubiogarcia/proyectoccdocker. Destacaremos que previamente realizamos el comando Docker tag para cambiar el nombre de nuestro Docker.
 

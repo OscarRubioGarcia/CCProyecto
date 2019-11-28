@@ -67,9 +67,7 @@ MAINTAINER Oscar Rubio Garcia
 
 WORKDIR /code
 
-RUN apk update && apk upgrade 
-RUN apk add --update py-pip
-RUN apk add linux-headers python3 py3-virtualenv
+RUN apk update && apk upgrade && apk add py-pip linux-headers python3 py3-virtualenv bash
 
 ENV VIRTUAL_ENV=/opt/venv
 RUN python3 -m virtualenv --python=/usr/bin/python3 $VIRTUAL_ENV
