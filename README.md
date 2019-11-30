@@ -82,7 +82,7 @@ CMD [ "invoke", "runPython" ]
 
 Adicionalmente realicé la subida del Docker tanto a Docker hub como a un repositorio creado en Heroku, a través del cual podemos comprobar el correcto comportamiento de la imagen Docker.
 
-Contenedor: https://hub.docker.com/r/oscarrubiogarcia/proyectoccdocker/tags
+Contenedor: https://hub.docker.com/r/oscarrubiogarcia/proyectoccdocker
 
 Contenedor en Heroku: https://newdashboardapi.herokuapp.com/news
 
