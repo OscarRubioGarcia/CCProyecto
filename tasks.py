@@ -53,3 +53,8 @@ def runPython(ctx):
 @task
 def runGunicorn(ctx):
     ctx.run("gunicorn -b 0.0.0.0:5000 app:api --reload")
+
+
+@task(help={'port': "Name of the port gunicorn will use when deploying the microservice."})
+def runGunicornParams(ctx, port):
+    ctx.run("gunicorn -b 0.0.0.0:%port app:api --reload")
