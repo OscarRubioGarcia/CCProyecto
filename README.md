@@ -87,7 +87,7 @@ La imagen actual del sistema está bajo el tag: microservicionews-v1.3-invoke-gu
 El Docker utilizado para la subida a Heroku usaba el siguiente comando CMD en vez del mostrado anteriormente:
 
 ```
-CMD [ "invoke", "runGunicorn", "-p", "5000" ]
+CMD [ "invoke", "runGunicorn"]
 ```
 
 Esto se debe a que heroku dinámicamente  asigna los puertos de nuestra app, por lo que no podemos establecer puertos fijos. 
