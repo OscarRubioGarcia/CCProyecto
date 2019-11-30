@@ -35,6 +35,8 @@ Para conocer en más detalle la arquitectura del sistema, siguan este
 
 Daremos uso de Invoke como nuestra herramienta de construcción para nuestro proyecto en Python. Esta esta localizada en tasks.py.
 
+buildtool: tasks.py
+
 [Descripción del fichero tasks.py.]( https://github.com/OscarRubioGarcia/CCProyecto/blob/master/docs/DefinicionTasks.md )
 
 ## Framework de Testing Local
