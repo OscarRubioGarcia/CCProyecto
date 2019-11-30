@@ -55,3 +55,33 @@ Esta última tarea se encargará de realizar el build de nuestro proyecto, segú
 En un futuro podremos realizar la automatización de la generación de documentación de nuestro proyecto utilizando sphinx, rinohtype y invoke.
 
 Para más información relacionada con unittest: https://docs.python.org/3/library/unittest.html
+
+## Actualizacion del 30-11-19
+
+Adición de comandos para el lanzamiento del microservicio, estos comandos utilizaran 3 tecnologias diferentes por si no fuera posible utilizar 1 tecnologia en el SO. 
+
+``` python
+@task
+def runGunicorn(ctx):
+    ctx.run("gunicorn -b 0.0.0.0:5000 app:api --reload")
+
+
+@task(help={'port': "Port number that gunicorn will use when deploying the microservice. (Usable for Linux)"})
+def runGunicornParams(ctx, port):
+    ctx.run("gunicorn -b 0.0.0.0:%s app:api --reload" % port)
+
+
+@task(help={'port': "Port number that waitress will use when deploying the microservice. (Usable for Windows)"})
+def runWaitress(ctx, port):
+    ctx.run("waitress-serve --port=%s app:app" % port)
+```
+    
+Utilizaremos principalmente Python para lanzar el microservicio como mínimo de forma de prueba para comprobar su resultado correcto.
+
+Para sistemas operativos Linux podremos dar uso de gunicorn, una herramienta la cual nos permitirá especificar desde línea de comandos el puerto por el que querremos lanzar nuestra aplicación y lanzarla.
+
+Para sistema operativos Windos daremos uso de waitress, en este caso sus funciones de línea de ordenes waitress-serve. Waitress cumplirá las mismas funciones que gunicorn actualmente cumple para nuestro sistema operativo Windows.
+
+Para más información relacionada con: 
+ * gunicorn: https://gunicorn.org/
+ * waitress: https://docs.pylonsproject.org/projects/waitress/en/stable/usage.html
