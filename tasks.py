@@ -52,9 +52,14 @@ def runPython(ctx):
 
 @task
 def runGunicorn(ctx):
-    ctx.run("gunicorn -b 0.0.0.0:5000 app:api --reload")
+    ctx.run("gunicorn -b 0.0.0.0:5000 \"app:create_app()\" ")
 
 
-@task(help={'port': "Name of the port gunicorn will use when deploying the microservice."})
+@task(help={'port': "Port number that gunicorn will use when deploying the microservice. (Usable for Linux)"})
 def runGunicornParams(ctx, port):
-    ctx.run("gunicorn -b 0.0.0.0:%port app:api --reload")
+    ctx.run("gunicorn -b 0.0.0.0:%s \"app:create_app()\" " % port)
+
+
+@task(help={'port': "Port number that waitress will use when deploying the microservice. (Usable for Windows)"})
+def runWaitress(ctx, port):
+    ctx.run("waitress-serve --port=%s app:app" % port)

@@ -33,9 +33,7 @@ Para conocer en más detalle la arquitectura del sistema, siguan este
 
 ## Herramienta de Construcción
 
-Daremos uso de Invoke como nuestra herramienta de construcción para nuestro proyecto en Python.
-
-buildtool: tasks.py
+Daremos uso de Invoke como nuestra herramienta de construcción para nuestro proyecto en Python. Esta esta localizada en tasks.py.
 
 [Descripción del fichero tasks.py.]( https://github.com/OscarRubioGarcia/CCProyecto/blob/master/docs/DefinicionTasks.md )
 
@@ -77,12 +75,14 @@ COPY requirements-img.txt requirements.txt
 RUN pip install -r requirements.txt
 COPY . /code
 
-CMD [ "invoke", "runPython" ]
+CMD [ "invoke", "runGunicornParams", "-p", "5000" ]
 ```
 
 Adicionalmente realicé la subida del Docker tanto a Docker hub como a un repositorio creado en Heroku, a través del cual podemos comprobar el correcto comportamiento de la imagen Docker.
 
 Contenedor: https://hub.docker.com/r/oscarrubiogarcia/proyectoccdocker
+
+La imagen actual del sistema está bajo el tag: microservicionews-v1.3-invoke-gunicorn
 
 Contenedor en Heroku: https://newdashboardapi.herokuapp.com/news
 

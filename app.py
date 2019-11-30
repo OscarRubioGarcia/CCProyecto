@@ -11,7 +11,6 @@ app = Flask(__name__)
 api = Api(app)
 parser = reqparse.RequestParser()
 
-
 def abortar_ruta_inexistente(ruta):
     abort(404, message="Error 404. Ruta {} Inexistente".format(ruta))
 
@@ -19,6 +18,10 @@ def abortar_ruta_inexistente(ruta):
 class Main(Resource):
     def get(self):
         return {'status': 'OK'}
+
+
+def create_app():
+    return app
 
 
 class News(Resource):
@@ -48,6 +51,7 @@ class NewsList(Resource):
 api.add_resource(Main, '/', '/status')
 api.add_resource(News, '/news/<id>')
 api.add_resource(NewsList, '/news')
+
 
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", 5000))

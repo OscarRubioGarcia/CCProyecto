@@ -29,7 +29,7 @@ COPY requirements-img.txt requirements.txt
 RUN pip install -r requirements.txt
 COPY . /code
 
-CMD [ "invoke", "runPython" ]
+CMD [ "invoke", "runGunicornParams", "-p", "5000" ]
 ```
 
 Para empezar, establecemos la imagen utilizada a ser una imagen que contenga en este caso el sistema alpine, en nuestro caso decidimos usar la versión más actualizada de alpine, está siendo la versión 3.10. Después definimos el entorno de trabajo en la imagen Docker que crearemos, en este caso el entorno será el directorio /code, adicionalmente estableceremos el maintainer del Docker siendo yo como autor.
@@ -40,7 +40,7 @@ Tras instalar python3 procedemos a asegurarnos que el entorno del entorno virtua
 
 A continuación, empezamos el proceso de creación de la imagen Docker, copiamos el archivo de requirements-img.txt de nuestro proyecto, el cual contiene solamente las dependencias necesarias a instalar en la imagen Docker para que funcione el proyecto, a un archivo requirements.txt en la imagen Docker. Proseguimos utilizando pip para instalar todas las dependencias del archivo requirements.txt en la imagen Docker. Despues, copiamos el resto de los archivos del proyecto en el directorio /code que creamos anteriormente.
 
-El paso final será la utilización del comando cmd para inicializar el microservicio, utilizamos nuestra herramienta de construccion invoke para invokar Python app.py para ejecutar el archivo Python en la imagen del Docker e inicializar el proyecto.
+El paso final será la utilización del comando cmd para inicializar el microservicio, utilizamos nuestra herramienta de construcción invoke para invocar, en el caso del so Linux, Gunicorn como servidor de la aplicación para ejecutar el lanzamiento de nuestro api REST en la imagen del Docker. Damos uso del servidor de aplicaciones Gunicorn puesto que es un servidor estable y comúnmente utilizado en aplicaciones Python como la nuestra (por lo que contiene gran cantidad de documentación).
 
 Tras la creación del archivo Docker procedimos a su generación, despliegue y subida a Docker Hub utilizando los siguientes comandos:
 * Docker image build . -t microservicionews:1.4
@@ -77,7 +77,7 @@ Cambiamos el tag de nuestra imagen para ser subida correctamente al repositorio 
 
 Comando utilizado para subir la imagen especificada como microservicionews al repositorio oscarrubiogarcia/proyectoccdocker. Destacaremos que previamente realizamos el comando Docker tag para cambiar el nombre de nuestro Docker.
 
-Una vez realizados estos comandos obtendríamos la imagen del Docker creado de alpine, en nuestro repositorio de Docker hub. A continuación, desplegaremos nuestro docker en heroku, para hacer esto tendremos que crear un archivo heroku.yml en nuestro proyecto, preferiblemente junto a nuestro archivo Dockerfile.
+Una vez realizados estos comandos obtendríamos la imagen del Docker creado de alpine, en nuestro repositorio de Docker hub. A continuación, desplegaremos nuestro docker en heroku, para hacer esto tendremos que crear un archivo heroku.yml en nuestro proyecto, preferiblemente junto a nuestro archivo Dockerfile.En nuestro caso asignamos el puerto 5000 como el puerto de lanzamiento, esta variable podría ser cambiada manualmente si fuese necesario.
 
 ### Archivo heroku.yml
 
