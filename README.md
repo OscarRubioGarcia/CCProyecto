@@ -84,6 +84,14 @@ Contenedor: https://hub.docker.com/r/oscarrubiogarcia/proyectoccdocker
 
 La imagen actual del sistema está bajo el tag: microservicionews-v1.3-invoke-gunicorn
 
+El Docker utilizado para la subida a Heroku usaba el siguiente comando CMD en vez del mostrado anteriormente:
+
+```
+CMD [ "invoke", "runGunicorn", "-p", "5000" ]
+```
+
+Esto se debe a que heroku dinámicamente  asigna los puertos de nuestra app, por lo que no podemos establecer puertos fijos. 
+
 Contenedor en Heroku: https://newdashboardapi.herokuapp.com/news
 
 Para más información con relación a la experimentación realizada y la creación de la imagen Docker, tanto el archivo dockerfile creado o el archivo heroku.yml, pueden seguir [el enlace a la descripción del dockerfile.]( https://github.com/OscarRubioGarcia/CCProyecto/blob/master/docs/Docker.md )
