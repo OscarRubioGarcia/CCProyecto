@@ -52,7 +52,7 @@ def runPython(ctx):
 
 @task
 def runGunicorn(ctx):
-    ctx.run("gunicorn -b 0.0.0.0:5000 \"app:create_app()\" ")
+    ctx.run("gunicorn \"app:create_app()\" ")
 
 
 @task(help={'port': "Port number that gunicorn will use when deploying the microservice. (Usable for Linux)"})

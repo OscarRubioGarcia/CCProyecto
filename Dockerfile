@@ -13,4 +13,4 @@ COPY requirements-img.txt requirements.txt
 RUN pip install -r requirements.txt
 COPY . /code
 
-CMD [ "invoke", "runGunicornParams", "-p", "5000" ]
+CMD [ "invoke", "runGunicorn" ]
