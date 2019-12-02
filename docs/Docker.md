@@ -7,7 +7,7 @@ La creación de un Docker con alpine, instalando python unicamente, nos dio una 
 La imagen creada utilizando el sistema operativo fedora fue bastante ligera en comparación con las imágenes creadas utilizando pyhon-alpine y Python-slim-buster. 
 
 Podemos observar los resultados obtenidos de la experimentación en la siguiente imagen:
-![Pesos Dockers]( https://raw.githubusercontent.com/OscarRubioGarcia/CC/blob/master/example/Docker-pesos.jpg)
+![Pesos Dockers]( https://raw.githubusercontent.com/OscarRubioGarcia/CC/master/example/Docker-pesos.jpg)
 
 Procedí a diseñar un archivo Docker sencillo con alpine, debido a ser esta una de las opciones más populares y a que mi experimentación me llevo a concluir que esta era una de las imagenes más ligeras, adicionalmente me gusto tener la posibilidad de actualizar el software y establecer el entorno de python manualmente.
 
@@ -106,8 +106,13 @@ Mostramos a continuación 2 pequeñas capturas demostrando la subida y despliegu
 ![Docker]( https://raw.githubusercontent.com/OscarRubioGarcia/CCProyecto/master/docs/DockerHub.jpg )
 ![Heroku]( https://raw.githubusercontent.com/OscarRubioGarcia/CCProyecto/master/docs/Heroku-Docker.jpg )
 
+## Automatización Docker Hub
+Con el fin de automatizar la subida y despliegue del archivo Dockerfile creado, crearemos un repositorio nuevo automatizado en Docker Hub, vinculando previamente nuestra cuenta de GitHub con Docker Hub. Vincularemos nuestro proyecto GitHub CCProyecto para la automatización del build y subida a DockerHub, básicamente para no tener que utilizar todos los comandos previamente usados. Aquí podemos ver la confirmación de la automatización en [Docker Hub]( https://raw.githubusercontent.com/OscarRubioGarcia/CCProyecto/master/docs/DockerAutomated.jpg)
+
+## Fuentes
 Se utilizo el tutorial mostrado en [este enlace](https://runnable.com/docker/python/dockerize-your-flask-application) para la recaudación de información relacionada con la construcción del Docker. 
 
-Adicionalmente también fue utilizada la documentación proporcionada por dockerhub y heroku para el correcto despliegue del Docker. 
+Adicionalmente también fue utilizada la documentación proporcionada por dockerhub y heroku para el correcto despliegue y automatización del Docker. 
 * [Documentación heroku](https://blog.heroku.com/build-docker-images-heroku-yml)
 * [Documentación docker hub](https://docs.docker.com/docker-hub/)
+* [Documentación docker hub automatización](https://docs.docker.com/docker-hub/builds/)

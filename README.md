@@ -82,7 +82,7 @@ CMD [ "invoke", "runGunicornParams", "-p", "5000" ]
 
 Adicionalmente realicé la subida del Docker tanto a Docker hub como a un repositorio creado en Heroku, a través del cual podemos comprobar el correcto comportamiento de la imagen Docker.
 
-Contenedor: https://hub.docker.com/r/oscarrubiogarcia/proyectoccdocker
+Contenedor: https://hub.docker.com/r/oscarrubiogarcia/automatedccproyecto
 
 La imagen actual del sistema está bajo el tag: microservicionews-v1.3-invoke-gunicorn
 
