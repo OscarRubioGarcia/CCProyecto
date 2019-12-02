@@ -107,7 +107,9 @@ Mostramos a continuación 2 pequeñas capturas demostrando la subida y despliegu
 ![Heroku]( https://raw.githubusercontent.com/OscarRubioGarcia/CCProyecto/master/docs/Heroku-Docker.jpg )
 
 ## Automatización Docker Hub
-Con el fin de automatizar la subida y despliegue del archivo Dockerfile creado, crearemos un repositorio nuevo automatizado en Docker Hub, vinculando previamente nuestra cuenta de GitHub con Docker Hub. Vincularemos nuestro proyecto GitHub CCProyecto para la automatización del build y subida a DockerHub, básicamente para no tener que utilizar todos los comandos previamente usados. Aquí podemos ver la confirmación de la automatización en [Docker Hub]( https://raw.githubusercontent.com/OscarRubioGarcia/CCProyecto/master/docs/DockerAutomated.jpg)
+Con el fin de automatizar la subida y despliegue del archivo Dockerfile creado, crearemos un repositorio nuevo automatizado en Docker Hub, vinculando previamente nuestra cuenta de GitHub con Docker Hub. Vincularemos nuestro proyecto GitHub CCProyecto para la automatización del build y subida a DockerHub, básicamente para no tener que utilizar todos los comandos previamente usados. Aquí podemos ver la confirmación de la automatización en Docker Hub.
+
+![Imagen Docker Hub]( https://raw.githubusercontent.com/OscarRubioGarcia/CCProyecto/master/docs/DockerAutomated.jpg)
 
 ## Fuentes
 Se utilizo el tutorial mostrado en [este enlace](https://runnable.com/docker/python/dockerize-your-flask-application) para la recaudación de información relacionada con la construcción del Docker. 
