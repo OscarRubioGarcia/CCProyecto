@@ -1,5 +1,3 @@
-from typing import List
-
 from project.model.Noticia import Noticia
 
 

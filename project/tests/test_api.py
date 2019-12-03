@@ -1,6 +1,6 @@
 import unittest
 
-from app import app
+from project.app import app
 
 
 class BasicTests(unittest.TestCase):
@@ -30,8 +30,6 @@ class BasicTests(unittest.TestCase):
                                                         {'campus': 'UGR', 'comentarios': [], 'descripcion': 'Descripcion detallada de noticia2', 'id': 2, 'titulo': 'Noticia2'}]})
 
     def test_gestor_news_put(self):
-        data = {'id': 1}
-        headers = {'content-type': 'application/json'}
         response = self.app.get('/news/1', follow_redirects=True, content_type='application/json')
         self.assertEqual(response.get_json(), {'news': [{'no news found with id': '1'}]})
 
