@@ -116,13 +116,13 @@ Finalmente utilizaremos los comandos dados en la documentación oficial de herok
 
 Con este comando vincularemos el repositorio en el que nos encontramos con el repositorio en heroku newdashboardapi.
 
-* Heroku stack:set container
+* Heroku stack:set container -a automatednewsapi
 
-Con este comando estableceremos el stack del proyecto de heroku como de tipo container
+Con este comando estableceremos el stack del proyecto de heroku como de tipo container, para asegurarnos de que el contenedor sera creado. después especificamos la app a la que nos estamos refiriendo.
 
 * Git push heroku master
 
-Finalmente con este comando publicamos todos los cambios realizados en el repositorio en heroku y este desplegara automáticamente la imagen establecida en el dockerfile.
+Finalmente con este comando publicamos todos los cambios realizados en el repositorio en heroku y este desplegara automáticamente la imagen establecida en el dockerfile. También podremos realizar un despliegue manual desde heroku mediante el menu de Deploy.
 
 Mostramos a continuación 2 pequeñas capturas demostrando la subida y despliegue con éxito tanto del Docker a Docker hub como del Docker a Heroku.
 
@@ -133,6 +133,10 @@ Mostramos a continuación 2 pequeñas capturas demostrando la subida y despliegu
 Con el fin de automatizar la subida y despliegue del archivo Dockerfile creado, crearemos un repositorio nuevo automatizado en Docker Hub, vinculando previamente nuestra cuenta de GitHub con Docker Hub. Vincularemos nuestro proyecto GitHub CCProyecto para la automatización del build y subida a DockerHub, básicamente para no tener que utilizar todos los comandos previamente usados. Aquí podemos ver la confirmación de la automatización en Docker Hub.
 
 ![Imagen Docker Hub]( https://raw.githubusercontent.com/OscarRubioGarcia/CCProyecto/master/docs/DockerAutomated.jpg)
+
+También se automatizo el despliegue en Heroku:
+
+![Heroku Auto]( https://raw.githubusercontent.com/OscarRubioGarcia/CCProyecto/master/docs/Heroku-Docker-Automated.jpg )
 
 ## Fuentes
 Se utilizo el tutorial mostrado en [este enlace](https://runnable.com/docker/python/dockerize-your-flask-application) para la recaudación de información relacionada con la construcción del Docker. 
