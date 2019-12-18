@@ -1,6 +1,7 @@
 import os
 from functools import wraps
 
+from cassandra.cluster import NoHostAvailable
 from flask import Blueprint, Response
 import flask
 import json
@@ -14,7 +15,10 @@ gestorNoticias = GestorNoticias()
 
 api = Blueprint("api", __name__)
 # Change to 0.0.0.0 for release
-connection.setup(['127.0.0.1'], "cqlengine", protocol_version=3)
+try:
+    connection.setup(['127.0.0.1'], "cqlengine", protocol_version=3)
+except NoHostAvailable:
+    pass
 # Change to 192.168.99.100
 # connection.setup(['192.168.99.100'], "cqlengine", protocol_version=3)
 parser = reqparse.RequestParser()

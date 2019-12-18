@@ -1,7 +1,7 @@
 from cassandra.cqlengine import connection
 from cassandra.cqlengine.management import sync_table
 from flask import Flask
-from cassandra.cluster import Cluster
+from cassandra.cluster import Cluster, NoHostAvailable
 from project.Cache import cache
 
 from project.model.Noticia import Noticia
@@ -16,17 +16,20 @@ def create_app():
     app.register_blueprint(api)
 
     # Change to 0.0.0.0 for release
-    cluster = Cluster(['127.0.0.1'], port=9042)
-    # Change to 192.168.99.100 for test local docker
-    # cluster = Cluster(['192.168.99.100'], port=9042)
-    session = cluster.connect()
+    try:
+        cluster = Cluster(['127.0.0.1'], port=9042)
+        # Change to 192.168.99.100 for test local docker
+        # cluster = Cluster(['192.168.99.100'], port=9042)
+        session = cluster.connect()
 
-    session.execute(
-        """
-        CREATE KEYSPACE IF NOT EXISTS %s WITH REPLICATION = { 'class' : 'SimpleStrategy', 'replication_factor' : 1 };
-        """ % KEYSPACE)
+        session.execute(
+            """
+            CREATE KEYSPACE IF NOT EXISTS %s WITH REPLICATION = { 'class' : 'SimpleStrategy', 'replication_factor' : 1 };
+            """ % KEYSPACE)
 
-    session = cluster.connect(keyspace=KEYSPACE)
+        session = cluster.connect(keyspace=KEYSPACE)
+    except NoHostAvailable:
+        pass
 
     return app
 
@@ -35,7 +38,10 @@ app = create_app()
 
 if __name__ == '__main__':
     # Change to 0.0.0.0 for release
-    connection.setup(['127.0.0.1'], "cqlengine", protocol_version=3)
+    try:
+        connection.setup(['127.0.0.1'], "cqlengine", protocol_version=3)
+    except NoHostAvailable:
+        pass
     # Change to 192.168.99.100 for test local docker
     # connection.setup(['192.168.99.100'], "cqlengine", protocol_version=3)
     sync_table(Noticia)
