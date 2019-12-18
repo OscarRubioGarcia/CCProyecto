@@ -3,7 +3,8 @@ from setuptools import setup, find_packages
 with open("README.md", "r") as readme_file:
     readme = readme_file.read()
 
-requirements = ["Flask", "connexion", "Flask-Injector", "Flask-RESTful", "fastavro", "invoke"]
+requirements = ["Flask", "coverage", "Flask-Injector", "Flask-RESTful", "gunicorn", "invoke",
+                "waitress", "cassandra-driver"]
 
 setup(
     name="campusDashboard",

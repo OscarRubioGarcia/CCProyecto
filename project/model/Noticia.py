@@ -1,16 +1,14 @@
 from project.model.Comentario import Comentario
+import uuid
+from cassandra.cqlengine import columns
+from project.model.Base import Base
 
 
-class Noticia:
-
-    def __init__(self, id=0, titulo="Default", descripcion="Default", campus="Default"):
-        self.id = id
-        self.titulo = titulo
-        self.descripcion = descripcion
-        self.campus = campus
-        self.listacomentarios = []
-
-    listacomentarios = []
+class Noticia(Base):
+    id = columns.UUID(primary_key=True, default=uuid.uuid4)
+    titulo = columns.Text()
+    descripcion = columns.Text()
+    campus = columns.Text()
 
     def __dict__(self):
         noticia = {
@@ -32,17 +30,10 @@ class Noticia:
         self.campus = campus
 
     def addComentarioLista(self, comentario: Comentario):
-        if not self._checkCuerpo(comentario.cuerpo):
-            raise NoBodyFoundException
-        self.listacomentarios.append(comentario)
+        raise NoBodyFoundException
 
     def deleteComentarioLista(self, comentario: Comentario):
-        if not self._checkCuerpo(comentario.cuerpo):
-            raise NoBodyFoundException
-        try:
-            self.listacomentarios.remove(comentario)
-        except ValueError:
-            raise ValueError
+        raise NoBodyFoundException
 
     def _checkCuerpo(self, cuerpo) -> bool:
 
@@ -60,13 +51,12 @@ class Noticia:
                self.descripcion == other.descripcion and \
                self.campus == other.campus
 
-    def serialize(self):
+    def get_data(self):
         return {
-            'id': self.id,
+            'id': str(self.id),
             'titulo': self.titulo,
             'descripcion': self.descripcion,
-            'campus': self.campus,
-            'comentarios': [e.serialize() for e in self.listacomentarios]
+            'campus': self.campus
         }
 
 

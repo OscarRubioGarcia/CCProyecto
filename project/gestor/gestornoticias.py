@@ -1,10 +1,11 @@
+from cassandra.cqlengine.query import LWTException
+
 from project.model.Noticia import Noticia
 
 
 class GestorNoticias(object):
-
-    noticiastest1 = Noticia(1, "Titulo Noticia", "Descripcion Noticia", "UGR")
-    noticiastest2 = Noticia(2, "Noticia2", "Descripcion detallada de noticia2", "UGR")
+    noticiastest1 = Noticia()
+    noticiastest2 = Noticia()
 
     listanoticias = []
     listanoticiastestapi = [
@@ -15,6 +16,33 @@ class GestorNoticias(object):
     def __init__(self):
         self.listanoticias.clear()
         pass
+
+    def listar(self):
+        return Noticia.objects().all()
+
+    def addWithData(self, data):
+        news = Noticia.create(titulo=data["titulo"], descripcion=data["descripcion"], campus=data["campus"])
+        if not self._checkEnoughData(news):
+            raise NotEnoughDataInNews
+        return news.save()
+
+    def deleteById(self, data):
+        success = "Deleted News with id %s" % data["id"]
+        try:
+            Noticia.objects(id=data["id"]).if_exists().delete()
+        except LWTException as e:
+            pass
+            success = "No news with id = %s, exist. " % data
+        return success
+
+    def getById(self, data):
+        try:
+            news = Noticia.objects(id=data["id"]).if_exists()
+            success = [noticia.get_data() for noticia in news]
+        except LWTException as e:
+            pass
+            success = "No news with id = %s, exist. " % data
+        return success
 
     def addNoticia(self, noticia: Noticia) -> None:
         if not self._checkEnoughData(noticia):
@@ -47,13 +75,11 @@ class GestorNoticias(object):
             return False
         if not hasattr(noticia, "campus"):
             return False
-        if noticia.id.__eq__(0):
+        if noticia.titulo.__eq__(''):
             return False
-        if noticia.titulo.__eq__("Default"):
+        if noticia.descripcion.__eq__(''):
             return False
-        if noticia.descripcion.__eq__("Default"):
-            return False
-        if noticia.campus.__eq__("Default"):
+        if noticia.campus.__eq__(''):
             return False
         return True
 

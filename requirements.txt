@@ -1,7 +1,9 @@
 Flask
 Flask-Injector
 Flask-RESTful
+Flask-Caching
 invoke
 coverage
 gunicorn
 waitress
+cassandra-driver

@@ -7,10 +7,18 @@ from project.model.Comentario import Comentario
 class MyTestCase(unittest.TestCase):
 
     def setUp(self):
-        self.noticiaPrueba = Noticia(0, "Apertura de Nueva Cafeteria", "Nueva cafeteria siendo abierta en...",
-                                     "Campus Universitario de Granada")
-        self.clonPrueba = Noticia(0, "Apertura de Nueva Cafeteria", "Nueva cafeteria siendo abierta en...",
-                                  "Campus Universitario de Granada")
+        self.noticiaPrueba = Noticia()
+        self.noticiaPrueba.id = 0
+        self.noticiaPrueba.titulo ="Apertura de Nueva Cafeteria"
+        self.noticiaPrueba.descripcion = "Nueva cafeteria siendo abierta en..."
+        self.noticiaPrueba.campus = "Campus Universitario de Granada"
+
+        self.clonPrueba = Noticia()
+        self.clonPrueba.id = 0
+        self.clonPrueba.titulo ="Apertura de Nueva Cafeteria"
+        self.clonPrueba.descripcion = "Nueva cafeteria siendo abierta en..."
+        self.clonPrueba.campus = "Campus Universitario de Granada"
+
         self.comentarioPrueba = Comentario(0, "Cuerpo comentario", "Oscar Rubio Garcia", 100)
         self.comentarioPruebaInexsistente = Comentario(0, "Error", "Oscar Rubio Garcia", 20)
 
@@ -41,6 +49,7 @@ class MyTestCase(unittest.TestCase):
         self.assertEqual(self.noticiaPrueba.campus, "Nuevo Campus",
                          "El atributo campus no fue modificado correctamente.")
 
+    '''
     def testInsertarComentarioEnListaComentariosNoticia(self):
         self.assertEqual(0, len(self.noticiaPrueba.listacomentarios),
                          "La noticia ya tiene comentarios (De alguna forma).")
@@ -60,7 +69,7 @@ class MyTestCase(unittest.TestCase):
         self.assertRaises(
             ValueError,
             self.noticiaPrueba.deleteComentarioLista, self.comentarioPruebaInexsistente)
-
+    '''
 
 if __name__ == '__main__':
     unittest.main()

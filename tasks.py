@@ -1,4 +1,5 @@
 import sys
+import time
 
 from invoke import task
 
@@ -54,10 +55,39 @@ def runGunicornParams(ctx, port="5000"):
         ctx.run("gunicorn -b 0.0.0.0:%s \"project.app:create_app()\" " % port)
 
 
+@task(help={'port': "Port number that gunicorn will use when deploying the microservice. (Usable for Linux)"})
+def runGunicornCassandraParams(ctx, port="5000"):
+    ctx.run("./apache-cassandra-3.11.4/bin/cassandra -R")
+    # Wait for DB setup
+    time.sleep(7)
+    ctx.run("python project/scripts/Regenerator.py")
+    # Wait for DB Regeneration
+    time.sleep(3)
+    if port == "DEFAULT":
+        port = 5000
+        ctx.run("gunicorn -b 0.0.0.0:%s \"project.CassandraLaunch:create_app()\" " % port)
+    else:
+        ctx.run("gunicorn -b 0.0.0.0:%s \"project.CassandraLaunch:create_app()\" " % port)
+
+
 @task(help={'port': "Port number that waitress will use when deploying the microservice. (Usable for Windows)"})
-def runWaitress(ctx, port="5000"):
+def callWaitress(ctx, port="5000"):
     if port == "DEFAULT":
         port = 5000
         ctx.run("waitress-serve --port=%s project.app:app" % port)
     else:
         ctx.run("waitress-serve --port=%s project.app:app" % port)
+
+
+@task(help={'port': "Port number that waitress will use when deploying the microservice. (Usable for Windows)"})
+def callWaitressCassandra(ctx, port="5000"):
+    if port == "DEFAULT":
+        port = 5000
+        ctx.run("waitress-serve --port=%s project.CassandraLaunch:app" % port)
+    else:
+        ctx.run("waitress-serve --port=%s project.CassandraLaunch:app" % port)
+
+
+@task()
+def regenerateDB(ctx):
+    ctx.run("python project/scripts/Regenerator.py")

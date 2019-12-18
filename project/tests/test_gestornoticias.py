@@ -7,8 +7,12 @@ from project.gestor.gestornoticias import GestorNoticias, NotEnoughDataInNews
 class MyTestCase(unittest.TestCase):
 
     def setUp(self):
-        self.noticiaPrueba = Noticia(1, "Apertura de Nueva Cafeteria", "Nueva cafeteria siendo abierta en...",
-                                     "Campus Universitario de Granada")
+        self.noticiaPrueba = Noticia()
+        self.noticiaPrueba.id = 1
+        self.noticiaPrueba.titulo = "Apertura de Nueva Cafeteria"
+        self.noticiaPrueba.descripcion = "Nueva cafeteria siendo abierta en..."
+        self.noticiaPrueba.campus = "Campus Universitario de Granada"
+
         self.noticiaVacia = Noticia()
         self.gestorNoticias = GestorNoticias()
 
