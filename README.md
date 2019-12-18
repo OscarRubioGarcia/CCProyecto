@@ -59,41 +59,29 @@ Realicé diversos experimentos utilizando los contenedores Docker y varios siste
 
 Procedí a diseñar un archivo Docker sencillo con alpine, debido a ser esta una de las opciones más populares y a que mi experimentación me llevo a concluir que esta era una de las imagenes más ligeras, adicionalmente me gusto tener la posibilidad de actualizar el software y establecer el entorno de python manualmente.
 
-**Contenido del fichero Dockerfile:**
-
-```
-FROM alpine:3.10
-MAINTAINER Oscar Rubio Garcia 
-
-WORKDIR /code
-ENV PORT="DEFAULT"
-
-RUN apk update && apk upgrade && apk add py-pip linux-headers python3 py3-virtualenv bash 
-
-ENV VIRTUAL_ENV=/opt/venv
-RUN python3 -m virtualenv --python=/usr/bin/python3 $VIRTUAL_ENV
-ENV PATH="$VIRTUAL_ENV/bin:$PATH"
-
-COPY requirements-img.txt requirements.txt
-RUN pip install -r requirements.txt
-RUN rm -rf requirements.txt
-
-COPY LICENSE tasks.py setup.py /code/
-COPY project /code/project
-
-RUN addgroup -S dockergroup && adduser -S dockeruser -G dockergroup -h /code
-USER dockeruser
-
-CMD invoke runGunicornParams -p ${PORT}
-```
-
 Adicionalmente realicé la subida del Docker tanto a Docker hub como a un repositorio creado en Heroku, a través del cual podemos comprobar el correcto comportamiento de la imagen Docker.
 
 Contenedor: https://hub.docker.com/r/oscarrubiogarcia/automatedccproyecto
 
+**Actualmente la automatización fue desactivada de heroku temporalmente**
+
 Contenedor en Heroku: https://automatednewsapi.herokuapp.com/news
 
 Para más información con relación a la experimentación realizada y la creación de la imagen Docker, tanto el archivo dockerfile creado o el archivo heroku.yml, pueden seguir [el enlace a la descripción del dockerfile.]( https://github.com/OscarRubioGarcia/CCProyecto/blob/master/docs/Docker.md )
+
+## Benchmarks
+
+Con el objetivo de poder comprobar las facultades de nuestro sistema se utilizo el software Taurus para la realización de Benchmarks. Este software fue testeado contra nuestro sistema desplegado en el Docker especificado anteriormente.
+
+## Resultados
+
+Estos son los resultados conseguidos de la experimentación con Taurus, en el microservicio de Noticias.
+
+## Fichero de Prestaciones
+
+Prestaciones: taurus_tests.yml
+
+Para saber más acerca de la experimentación realizada y los cambios realizados en los archivos relacionados, sigua el siguiente [enlace a la descripción de la experimentación. ]( https://github.com/OscarRubioGarcia/CCProyecto/blob/master/docs/Taurus.md )
 
 ## Despliegue del proyecto
 
