@@ -16,9 +16,9 @@ RUN pip install -r requirements.txt
 RUN rm -rf requirements.txt
 
 COPY LICENSE tasks.py setup.py /code/
-COPY project2 /code/project2
+COPY project /code/project
 
 RUN addgroup -S dockergroup && adduser -S dockeruser -G dockergroup -h /code
 USER dockeruser
 
-CMD invoke runGunicornCassandraAsyncParamsComments -p ${PORT}
+CMD invoke runGunicornAsyncParams -p ${PORT}

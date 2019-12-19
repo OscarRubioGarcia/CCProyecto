@@ -1,22 +1,17 @@
 ---
 execution:
-- concurrency: 100
+- concurrency: 10
   ramp-up: 10s
   hold-for: 60s
-  throughput: 1500
+  throughput: 1000
   steps: 10
   scenario: basic-services-test
 
 scenarios:
   basic-services-test:
-    timeout: 5s
-    retrieve-resources: false
-    store-cache: false
-    store-cookie: false
     requests:
     - http://localhost:5000/news
     - http://localhost:5000/status
-
 
 reporting:
 - final-stats

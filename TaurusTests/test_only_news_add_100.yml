@@ -1,0 +1,34 @@
+---
+execution:
+- concurrency: 100
+  ramp-up: 10s
+  hold-for: 60s
+  throughput: 10000
+  steps: 10
+  scenario: basic-services-test
+
+scenarios:
+  basic-services-test:
+    requests:
+    - url: http://localhost:5000/news/addById
+      method: POST
+      headers:
+          Content-Type: application/json
+      body-file: json_add_specific_news.json
+    - url: http://localhost:5000/news/add
+      method: POST
+      headers:
+          Content-Type: application/json
+      body-file: json_add_news.json
+    - http://localhost:5000/status
+    - http://localhost:5000/news
+    - url: http://localhost:5000/news/findById
+      method: POST
+      headers:
+          Content-Type: application/json
+      body-file: json_del_news.json
+
+reporting:
+- final-stats
+- console
+- blazemeter 

@@ -61,7 +61,6 @@ def get_by_comments():
     return comments
 
 
-#error
 @api.route("/comments/findByIdnoticia", methods=["POST"])
 @json_api
 @cache.cached(timeout=60, key_prefix='find_noticia_comments')

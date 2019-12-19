@@ -13,7 +13,7 @@ class GestorComentarios(object):
         uuidid = uuid.UUID(data["idnoticia"])
         comments = Comentario.create(cuerpo=data["cuerpo"], usuario=data["usuario"], puntuacion=data["puntuacion"],
                                      idnoticia=uuidid)
-		
+
         return comments.save()
 
     def deleteById(self, data):

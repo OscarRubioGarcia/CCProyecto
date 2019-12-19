@@ -3,8 +3,6 @@ from functools import wraps
 from multiprocessing import Process
 from multiprocessing.pool import Pool
 
-import requests
-from asgiref.sync import sync_to_async
 from cassandra.cluster import NoHostAvailable
 from flask import Blueprint, Response
 import flask
@@ -21,10 +19,10 @@ api = Blueprint("api", __name__)
 # Change to 0.0.0.0 for release
 try:
     connection.setup(['127.0.0.1'], "cqlengine", protocol_version=3)
+    # Change to 192.168.99.100
+    # connection.setup(['192.168.99.100'], "cqlengine", protocol_version=3)
 except NoHostAvailable:
     pass
-# Change to 192.168.99.100
-# connection.setup(['192.168.99.100'], "cqlengine", protocol_version=3)
 parser = reqparse.RequestParser()
 
 
@@ -63,7 +61,6 @@ def get_all():
 
 @api.route("/news/findById", methods=["POST"])
 @json_api
-@cache.cached(timeout=60, key_prefix='find_news')
 def get_by():
     data = json.loads(flask.request.data)
     news = gestorNoticias.getById(data)
@@ -75,7 +72,15 @@ def get_by():
 def add_new():
     data = json.loads(flask.request.data)
     news = gestorNoticias.addWithData(data)
-    return news.get_data()
+    return news
+
+
+@api.route("/news/addById", methods=["POST"])
+@json_api
+def add_new_id():
+    data = json.loads(flask.request.data)
+    news = gestorNoticias.addWithDataAll(data)
+    return news
 
 
 @api.route("/news/deleteById", methods=["DELETE"])
@@ -88,7 +93,6 @@ def delete_id():
 
 # Temporal Test service
 @api.route("/news/deleteRandom", methods=["DELETE"])
-@json_api
 def delete_rand():
     news = gestorNoticias.deleteFirst()
     return news
@@ -97,8 +101,8 @@ def delete_rand():
 @api.route("/news/getCommentsFromId", methods=["POST"])
 @json_api
 def get_comments_id():
-    rawdata = flask.request.data
-    news = gestorNoticias.findCommentsById(rawdata)
+    raw_data = flask.request.data
+    news = gestorNoticias.findCommentsById(raw_data)
     return news
 
 

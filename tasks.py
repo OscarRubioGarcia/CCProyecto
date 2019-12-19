@@ -76,9 +76,9 @@ def runGunicornAsyncParams(ctx, port="5000"):
         port = 5000
         # --workers=5 --threads=2
         # --worker-class gevent --workers=3
-        ctx.run("gunicorn -b 0.0.0.0:%s --workers=5 --threads=4 \"project.CassandraLaunch:create_app()\" " % port)
+        ctx.run("gunicorn -b 0.0.0.0:%s --workers=5 --threads=25 \"project.CassandraLaunch:create_app()\" " % port)
     else:
-        ctx.run("gunicorn -b 0.0.0.0:%s --workers=5 --threads=4 \"project.CassandraLaunch:create_app()\" " % port)
+        ctx.run("gunicorn -b 0.0.0.0:%s --workers=5 --threads=25 \"project.CassandraLaunch:create_app()\" " % port)
 
 
 @task(help={'port': "Port number that waitress will use when deploying the microservice. (Usable for Windows)"})
@@ -97,15 +97,9 @@ def callWaitressCassandra(ctx, port="5000"):
     time.sleep(3)
     if port == "DEFAULT":
         port = 5000
-        ctx.run("waitress-serve --port=%s project.CassandraLaunch:app" % port)
+        ctx.run("waitress-serve --port=%s --threads=25 project.CassandraLaunch:app" % port)
     else:
-        ctx.run("waitress-serve --port=%s project.CassandraLaunch:app" % port)
-
-
-@task()
-def regenerateDB(ctx):
-    ctx.run("python project/scripts/Regenerator.py")
-
+        ctx.run("waitress-serve --port=%s --threads=25 project.CassandraLaunch:app" % port)
 
 # ------------------------------------------Service Commments Tasks----------------------------------------------------
 
@@ -118,9 +112,9 @@ def callWaitressCassandraComments(ctx, port="5050"):
     time.sleep(4)
     if port == "DEFAULT":
         port = 5050
-        ctx.run("waitress-serve --port=%s project2.CassandraLaunchComments:app" % port)
+        ctx.run("waitress-serve --port=%s --threads=25 project2.CassandraLaunchComments:app" % port)
     else:
-        ctx.run("waitress-serve --port=%s project2.CassandraLaunchComments:app" % port)
+        ctx.run("waitress-serve --port=%s --threads=25 project2.CassandraLaunchComments:app" % port)
 
 
 @task(help={'port': "Port number that gunicorn will use when deploying the microservice comments. "
@@ -128,9 +122,9 @@ def callWaitressCassandraComments(ctx, port="5050"):
 def runGunicornAsyncParamsComments(ctx, port="5050"):
     if port == "DEFAULT":
         port = 5050
-        ctx.run("gunicorn -b 0.0.0.0:%s --workers=5 --threads=4 \"project2.CassandraLaunchComments:create_app()\" " % port)
+        ctx.run("gunicorn -b 0.0.0.0:%s --workers=5 --threads=25 \"project2.CassandraLaunchComments:create_app()\" " % port)
     else:
-        ctx.run("gunicorn -b 0.0.0.0:%s --workers=5 --threads=4 \"project2.CassandraLaunchComments:create_app()\" " % port)
+        ctx.run("gunicorn -b 0.0.0.0:%s --workers=5 --threads=25 \"project2.CassandraLaunchComments:create_app()\" " % port)
 
 
 @task()

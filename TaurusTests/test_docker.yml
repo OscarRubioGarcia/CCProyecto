@@ -1,0 +1,29 @@
+---
+execution:
+- concurrency: 10
+  ramp-up: 10s
+  hold-for: 60s
+  throughput: 1500
+  steps: 10
+  scenario: basic-services-test
+
+scenarios:
+  basic-services-test:
+    requests:
+    - http://192.168.99.100:5000/news
+    - http://192.168.99.100:5000/status
+    - url: http://192.168.99.100:5000/news/addById
+      method: POST
+      headers:
+          Content-Type: application/json
+      body-file: json_add_news.json
+    - url: http://192.168.99.100:5000/news/deleteById
+      method: DELETE
+      headers:
+          Content-Type: application/json
+      body-file: json_del_news.json
+
+reporting:
+- final-stats
+- console
+- blazemeter 

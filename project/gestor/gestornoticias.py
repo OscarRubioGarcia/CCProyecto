@@ -1,18 +1,16 @@
+import uuid
 
-from cassandra.cqlengine.query import LWTException
+from cassandra.cqlengine.query import LWTException, DoesNotExist
 import requests
 
 from project.model.Noticia import Noticia
 
 
 class GestorNoticias(object):
-    noticiastest1 = Noticia()
-    noticiastest2 = Noticia()
 
     listanoticias = []
     listanoticiastestapi = [
-        noticiastest1,
-        noticiastest2,
+
     ]
 
     def __init__(self):
@@ -26,19 +24,26 @@ class GestorNoticias(object):
         news = Noticia.create(titulo=data["titulo"], descripcion=data["descripcion"], campus=data["campus"])
         if not self._checkEnoughData(news):
             raise NotEnoughDataInNews
-        return news.save()
+        return news.save().get_data()
+
+    def addWithDataAll(self, data):
+        news = Noticia.create(id=uuid.UUID(data["id"]), titulo=data["titulo"], descripcion=data["descripcion"],
+                              campus=data["campus"]).save()
+
+        return news.get_data()
 
     def deleteById(self, data):
-        success = "Deleted : Deleted News with id %s" % data["id"]
+        success = " { Deleted : Deleted News with id %s }" % data["id"]
         try:
             Noticia.objects(id=data["id"]).if_exists().delete()
         except LWTException as e:
             pass
-            success = "No news with id = %s, exist. " % data
+            success = "{ Deleted : No news with id = %s, exist. }" % data
+
         return success
 
     def deleteFirst(self):
-        success = "Deleted : Deleted News with id "
+        success = " { Deleted : Deleted News with id }"
 
         for n in Noticia.objects().all():
             success = success + str(n.id)
@@ -49,11 +54,11 @@ class GestorNoticias(object):
 
     def getById(self, data):
         try:
-            news = Noticia.objects(id=data["id"]).if_exists()
-            success = [noticia.get_data() for noticia in news]
-        except LWTException as e:
+            news = Noticia.get(id=data["id"])
+            success = news.get_data()
+        except DoesNotExist as e:
             pass
-            success = "No news with id = %s, exist. " % data
+            success = "{ answer : No news with id = %s, exist. } " % data
         return success
 
     def findCommentsById(self, data):
@@ -89,8 +94,6 @@ class GestorNoticias(object):
 
     def _checkEnoughData(self, noticia: Noticia) -> bool:
 
-        if not hasattr(noticia, "id"):
-            return False
         if not hasattr(noticia, "titulo"):
             return False
         if not hasattr(noticia, "descripcion"):
