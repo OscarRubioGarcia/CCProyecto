@@ -1,7 +1,10 @@
 import os
 from functools import wraps
+from multiprocessing import Process
+from multiprocessing.pool import Pool
 
 import requests
+from asgiref.sync import sync_to_async
 from cassandra.cluster import NoHostAvailable
 from flask import Blueprint, Response
 import flask
@@ -91,12 +94,11 @@ def delete_rand():
     return news
 
 
-#Currently Unavailable
 @api.route("/news/getCommentsFromId", methods=["POST"])
 @json_api
 def get_comments_id():
-    data = json.loads(flask.request.data)
-    news = gestorNoticias.findCommentsById(data)
+    rawdata = flask.request.data
+    news = gestorNoticias.findCommentsById(rawdata)
     return news
 
 

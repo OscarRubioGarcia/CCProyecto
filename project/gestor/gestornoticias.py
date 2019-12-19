@@ -1,3 +1,4 @@
+
 from cassandra.cqlengine.query import LWTException
 import requests
 
@@ -28,7 +29,7 @@ class GestorNoticias(object):
         return news.save()
 
     def deleteById(self, data):
-        success = "Deleted News with id %s" % data["id"]
+        success = "Deleted : Deleted News with id %s" % data["id"]
         try:
             Noticia.objects(id=data["id"]).if_exists().delete()
         except LWTException as e:
@@ -37,7 +38,7 @@ class GestorNoticias(object):
         return success
 
     def deleteFirst(self):
-        success = "Deleted News with id "
+        success = "Deleted : Deleted News with id "
 
         for n in Noticia.objects().all():
             success = success + str(n.id)
@@ -59,17 +60,6 @@ class GestorNoticias(object):
         # Change to deployed port
         url = 'http://localhost:5050/comments/findByIdnoticia'
         # url = 'http://localhost:5000/news/findById'
-
-        '''
-        # Receive method
-        request = flask.request.data
-    
-        if isinstance(request, bytes):
-        print(flask.request.data)
-        request = request.decode('utf8').replace("'", '"')
-        print(request)
-
-        '''
 
         success = requests.post(url, data=data, headers={'Content-Type': 'application/json'}, timeout=20)
         answer = success.text

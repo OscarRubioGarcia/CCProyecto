@@ -71,20 +71,14 @@ def runGunicornCassandraParams(ctx, port="5000"):
 
 
 @task(help={'port': "Port number that gunicorn will use when deploying the microservice. (Usable for Linux)"})
-def runGunicornCassandraAsyncParams(ctx, port="5000"):
-    ctx.run("./apache-cassandra-3.11.4/bin/cassandra -R")
-    # Wait for DB setup
-    time.sleep(10)
-    ctx.run("python project/scripts/Regenerator.py")
-    # Wait for DB Regeneration
-    time.sleep(3)
+def runGunicornAsyncParams(ctx, port="5000"):
     if port == "DEFAULT":
         port = 5000
         # --workers=5 --threads=2
         # --worker-class gevent --workers=3
-        ctx.run("gunicorn -b 0.0.0.0:%s --workers=5 --threads=2 \"project.CassandraLaunch:create_app()\" " % port)
+        ctx.run("gunicorn -b 0.0.0.0:%s --workers=5 --threads=4 \"project.CassandraLaunch:create_app()\" " % port)
     else:
-        ctx.run("gunicorn -b 0.0.0.0:%s --workers=5 --threads=2 \"project.CassandraLaunch:create_app()\" " % port)
+        ctx.run("gunicorn -b 0.0.0.0:%s --workers=5 --threads=4 \"project.CassandraLaunch:create_app()\" " % port)
 
 
 @task(help={'port': "Port number that waitress will use when deploying the microservice. (Usable for Windows)"})
@@ -131,15 +125,15 @@ def callWaitressCassandraComments(ctx, port="5050"):
 
 @task(help={'port': "Port number that gunicorn will use when deploying the microservice comments. "
                     "(Usable for Linux)"})
-def runGunicornCassandraAsyncParamsComments(ctx, port="5050"):
-    ctx.run("./apache-cassandra-3.11.4/bin/cassandra -R")
-    # Wait for DB setup
-    time.sleep(10)
-    ctx.run("python project2/scripts/Regenerator.py")
-    # Wait for DB Regeneration
-    time.sleep(3)
+def runGunicornAsyncParamsComments(ctx, port="5050"):
     if port == "DEFAULT":
         port = 5050
-        ctx.run("gunicorn -b 0.0.0.0:%s --workers=5 --threads=2 \"project2.CassandraLaunchComments:create_app()\" " % port)
+        ctx.run("gunicorn -b 0.0.0.0:%s --workers=5 --threads=4 \"project2.CassandraLaunchComments:create_app()\" " % port)
     else:
-        ctx.run("gunicorn -b 0.0.0.0:%s --workers=5 --threads=2 \"project2.CassandraLaunchComments:create_app()\" " % port)
+        ctx.run("gunicorn -b 0.0.0.0:%s --workers=5 --threads=4 \"project2.CassandraLaunchComments:create_app()\" " % port)
+
+
+@task()
+def regenerateCassandra(ctx):
+    ctx.run("python project2/scripts/Regenerator.py")
+    ctx.run("python project/scripts/Regenerator.py")

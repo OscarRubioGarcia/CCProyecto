@@ -1,0 +1,26 @@
+---
+execution:
+- concurrency: 10
+  ramp-up: 10s
+  hold-for: 50s
+  scenario: basic-services-test
+  iterations: 1000
+
+
+scenarios:
+  basic-services-test:
+    requests:
+    - http://localhost:5000/news
+    - http://localhost:5000/status
+    - url: http://localhost:5000/news/add
+      method: POST
+      headers:
+          Content-Type: application/json
+      body-file: json_add_news.json
+    - url: http://localhost:5000/news/deleteRandom
+      method: DELETE
+
+reporting:
+- final-stats
+- console
+- blazemeter 
