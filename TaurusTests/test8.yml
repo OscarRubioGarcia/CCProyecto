@@ -1,16 +1,14 @@
 ---
 execution:
 - concurrency: 10
-  ramp-up: 10s
+  ramp-up: 12s
   hold-for: 60s
-  iterations: 100
-  scenario: basic-services-test
+  scenario: basic-services-endurance-test
 
 
 scenarios:
-  basic-services-test:
+  basic-services-endurance-test:
     requests:
-    - http://192.168.99.100:5000/news
     - http://192.168.99.100:5000/status
     - url: http://192.168.99.100:5000/news/add
       method: POST
@@ -19,7 +17,6 @@ scenarios:
       body-file: json_add_news.json
     - url: http://192.168.99.100:5000/news/deleteRandom
       method: DELETE
-    - http://192.168.99.100:5050/comments
     - http://192.168.99.100:5050/status
     - url: http://192.168.99.100:5050/comments/add
       method: POST

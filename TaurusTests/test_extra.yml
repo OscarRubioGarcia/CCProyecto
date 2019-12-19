@@ -1,0 +1,20 @@
+---
+execution:
+- concurrency: 1
+  ramp-up: 10s
+  hold-for: 60s
+  iterations: 1
+  scenario: basic-services-test
+
+
+scenarios:
+  basic-services-test:
+    requests:
+    - url: http://localhost:5000/news/add
+      method: POST
+      headers:
+          Content-Type: application/json
+      body-file: json_add_news.json
+    - url: http://localhost:5000/news/deleteRandom
+      method: DELETE
+      

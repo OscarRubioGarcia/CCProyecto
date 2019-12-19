@@ -1,6 +1,7 @@
 import os
 from functools import wraps
 
+import requests
 from cassandra.cluster import NoHostAvailable
 from flask import Blueprint, Response
 import flask
@@ -23,6 +24,7 @@ except NoHostAvailable:
 # connection.setup(['192.168.99.100'], "cqlengine", protocol_version=3)
 parser = reqparse.RequestParser()
 
+
 def abortar_ruta_inexistente(ruta):
     abort(404, message="Error 404. Ruta {} Inexistente".format(ruta))
 
@@ -31,7 +33,9 @@ def json_api(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
         result = f(*args, **kwargs)
+
         json_result = to_json(result)
+
         return Response(response=json_result,
                         status=200,
                         mimetype="application/json")
@@ -41,14 +45,14 @@ def json_api(f):
 
 @api.route('/', defaults={"path": ""})
 @api.route('/status')
-@cache.cached(timeout=50)
+@cache.cached(timeout=60)
 def index(path=None):
     return {'status': 'OK'}
 
 
 @api.route("/news")
 @json_api
-@cache.cached(timeout=50, key_prefix='all_news')
+@cache.cached(timeout=60, key_prefix='all_news')
 def get_all():
     news = gestorNoticias.listar()
     return [noticia.get_data() for noticia in news]
@@ -56,7 +60,7 @@ def get_all():
 
 @api.route("/news/findById", methods=["POST"])
 @json_api
-@cache.cached(timeout=50, key_prefix='find_news')
+@cache.cached(timeout=60, key_prefix='find_news')
 def get_by():
     data = json.loads(flask.request.data)
     news = gestorNoticias.getById(data)
@@ -79,6 +83,23 @@ def delete_id():
     return news
 
 
+# Temporal Test service
+@api.route("/news/deleteRandom", methods=["DELETE"])
+@json_api
+def delete_rand():
+    news = gestorNoticias.deleteFirst()
+    return news
+
+
+#Currently Unavailable
+@api.route("/news/getCommentsFromId", methods=["POST"])
+@json_api
+def get_comments_id():
+    data = json.loads(flask.request.data)
+    news = gestorNoticias.findCommentsById(data)
+    return news
+
+
 def to_json(data):
     def handler(obj):
         if hasattr(obj, 'isoformat'):
@@ -88,7 +109,8 @@ def to_json(data):
 
     return json.dumps(data, default=handler)
 
-#if __name__ == '__main__':
+
+# if __name__ == '__main__':
 #    cache.init_app(app, config=config)
 #    with app.app_context():
 #        cache.clear()

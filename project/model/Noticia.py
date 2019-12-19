@@ -1,4 +1,3 @@
-from project.model.Comentario import Comentario
 import uuid
 from cassandra.cqlengine import columns
 from project.model.Base import Base
@@ -12,7 +11,7 @@ class Noticia(Base):
 
     def __dict__(self):
         noticia = {
-            "Id": self.id,
+            "Id": str(self.id),
             "Titulo": self.titulo,
             "Descripcion": self.descripcion,
             "Campus": self.campus,
@@ -29,14 +28,7 @@ class Noticia(Base):
     def setCampus(self, campus):
         self.campus = campus
 
-    def addComentarioLista(self, comentario: Comentario):
-        raise NoBodyFoundException
-
-    def deleteComentarioLista(self, comentario: Comentario):
-        raise NoBodyFoundException
-
     def _checkCuerpo(self, cuerpo) -> bool:
-
         if cuerpo.strip() == "":
             return False
 

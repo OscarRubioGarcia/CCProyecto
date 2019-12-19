@@ -1,4 +1,5 @@
 from cassandra.cqlengine.query import LWTException
+import requests
 
 from project.model.Noticia import Noticia
 
@@ -35,6 +36,16 @@ class GestorNoticias(object):
             success = "No news with id = %s, exist. " % data
         return success
 
+    def deleteFirst(self):
+        success = "Deleted News with id "
+
+        for n in Noticia.objects().all():
+            success = success + str(n.id)
+            n.delete()
+            break
+
+        return success
+
     def getById(self, data):
         try:
             news = Noticia.objects(id=data["id"]).if_exists()
@@ -43,6 +54,27 @@ class GestorNoticias(object):
             pass
             success = "No news with id = %s, exist. " % data
         return success
+
+    def findCommentsById(self, data):
+        # Change to deployed port
+        url = 'http://localhost:5050/comments/findByIdnoticia'
+        # url = 'http://localhost:5000/news/findById'
+
+        '''
+        # Receive method
+        request = flask.request.data
+    
+        if isinstance(request, bytes):
+        print(flask.request.data)
+        request = request.decode('utf8').replace("'", '"')
+        print(request)
+
+        '''
+
+        success = requests.post(url, data=data, headers={'Content-Type': 'application/json'}, timeout=20)
+        answer = success.text
+        print(success.text)
+        return answer
 
     def addNoticia(self, noticia: Noticia) -> None:
         if not self._checkEnoughData(noticia):

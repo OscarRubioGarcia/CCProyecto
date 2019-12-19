@@ -5,3 +5,6 @@ invoke
 coverage
 gunicorn
 cassandra-driver
+requests
+
+

@@ -3,7 +3,7 @@ execution:
 - concurrency: 10
   ramp-up: 10s
   hold-for: 60s
-  iterations: 100
+  iterations: 10
   scenario: basic-services-test
 
 
@@ -12,13 +12,6 @@ scenarios:
     requests:
     - http://192.168.99.100:5000/news
     - http://192.168.99.100:5000/status
-    - url: http://192.168.99.100:5000/news/add
-      method: POST
-      headers:
-          Content-Type: application/json
-      body-file: json_add_news.json
-    - url: http://192.168.99.100:5000/news/deleteRandom
-      method: DELETE
     - http://192.168.99.100:5050/comments
     - http://192.168.99.100:5050/status
     - url: http://192.168.99.100:5050/comments/add
@@ -28,7 +21,7 @@ scenarios:
       body-file: json_add_comment.json
     - url: http://192.168.99.100:5050/comments/deleteRandom
       method: DELETE
-
+      
 reporting:
 - final-stats
 - console

@@ -1,0 +1,21 @@
+---
+execution:
+- concurrency: 10
+  ramp-up: 10s
+  hold-for: 60s
+  iterations: 100
+  scenario: basic-services-test
+
+
+scenarios:
+  basic-services-test:
+    requests:
+    - http://192.168.99.100:5000/news
+    - http://192.168.99.100:5000/status
+    - http://192.168.99.100:5050/comments
+    - http://192.168.99.100:5050/status
+
+reporting:
+- final-stats
+- console
+- blazemeter 

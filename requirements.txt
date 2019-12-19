@@ -7,3 +7,7 @@ coverage
 gunicorn
 waitress
 cassandra-driver
+requests
+
+
+

@@ -1,6 +1,15 @@
 version: '3'
-services:
-  web:
-    build: .
+
+services: 
+ webappnews: 
+    build:
+      context: .
+      dockerfile: Dockerfile-news
     ports:
-      - "5050:5050"
+      - 5000:5000
+ webappcoms:
+    build:
+      context: .
+      dockerfile: Dockerfile-comments
+    ports:
+      - 5050:5050

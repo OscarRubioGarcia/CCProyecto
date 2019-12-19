@@ -1,7 +1,6 @@
 import unittest
 
 from project.model.Noticia import Noticia
-from project.model.Comentario import Comentario
 
 
 class MyTestCase(unittest.TestCase):
@@ -18,9 +17,6 @@ class MyTestCase(unittest.TestCase):
         self.clonPrueba.titulo ="Apertura de Nueva Cafeteria"
         self.clonPrueba.descripcion = "Nueva cafeteria siendo abierta en..."
         self.clonPrueba.campus = "Campus Universitario de Granada"
-
-        self.comentarioPrueba = Comentario(0, "Cuerpo comentario", "Oscar Rubio Garcia", 100)
-        self.comentarioPruebaInexsistente = Comentario(0, "Error", "Oscar Rubio Garcia", 20)
 
     def testTipoCreacion(self):
         self.assertIsInstance(self.noticiaPrueba, Noticia, "Tipo de objeto incorrecto, no es del tipo Noticia.")

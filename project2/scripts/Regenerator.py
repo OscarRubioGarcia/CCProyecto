@@ -3,12 +3,10 @@ import random
 
 from cassandra.cluster import Cluster
 
-KEYSPACE = "noticias"
+KEYSPACE = "comentarios"
 
 if __name__ == "__main__":
     cluster = Cluster(['127.0.0.1'], port=9042)
-    # Change to 192.168.99.100 for test local docker
-    # cluster = Cluster(['192.168.99.100'], port=9042)
     session = cluster.connect()
 
     session.execute(
@@ -18,25 +16,27 @@ if __name__ == "__main__":
 
     session = cluster.connect(keyspace=KEYSPACE)
     tableFlag = True
-    data = session.execute(""" SELECT * FROM system_schema.tables  WHERE keyspace_name='noticias'; """)
+    data = session.execute(""" SELECT * FROM system_schema.tables  WHERE keyspace_name='comentarios'; """)
     for row in data:
         # print(row.keyspace_name)
-        if row.keyspace_name == "noticias":
+        if row.keyspace_name == "comentarios":
             tableFlag = False
 
     if tableFlag:
         session.execute(
             """
-            CREATE TABLE Noticia (
+            CREATE TABLE Comentario (
              id UUID,
-             titulo text,
-             descripcion text,
-             campus text,
+             cuerpo text,
+             usuario text,
+             puntuacion bigint,
+             idnoticia UUID,
              PRIMARY KEY(id)
             );
             """
         )
 
+        # 62b48eec-9dfa-44db-ae95-0211abf54d95
         random.seed(123210912)
         a = "%32x" % random.getrandbits(128)
         rd = a[:12] + '4' + a[13:16] + 'a' + a[17:]
@@ -44,13 +44,14 @@ if __name__ == "__main__":
 
         session.execute(
             """
-            INSERT INTO Noticia(id, titulo,descripcion,campus) VALUES (%s, 'SampleData en UGR','Hubo SampleData','UGR');
+            INSERT INTO Comentario(id, cuerpo, usuario, puntuacion, idnoticia) VALUES (uuid(), 'Ejemplo comentario', 'testuser', 100, %s);
             """ % uuid4
         )
+
         session.execute(
             """
-            INSERT INTO Noticia(id, titulo,descripcion,campus) VALUES (uuid(), 'SampleData','SampleData','CampusExample');
-            """
+            INSERT INTO Comentario(id, cuerpo, usuario, puntuacion, idnoticia) VALUES (uuid(), 'SampleData','testuser', 100, %s);
+            """ % uuid4
         )
 
     print("Successful Database Regeneration.")

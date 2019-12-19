@@ -11,7 +11,8 @@ RUN wget http://archive.apache.org/dist/cassandra/3.11.4/apache-cassandra-3.11.4
     && tar -xzvf apache-cassandra-3.11.4-bin.tar.gz \
     && rm -rf apache-cassandra-3.11.4-bin.tar.gz
 
-RUN mkdir /var/lib/cassandra /var/log/cassandra
+RUN mkdir /var/lib/cassandra
+RUN mkdir /var/log/cassandra
 
 ENV VIRTUAL_ENV=/opt/venv
 RUN python3 -m virtualenv --python=/usr/bin/python3 $VIRTUAL_ENV
@@ -22,6 +23,6 @@ RUN pip install -r requirements.txt
 RUN rm -rf requirements.txt
 
 COPY LICENSE tasks.py setup.py /code/
-COPY project /code/project
+COPY project2 /code/project2
 
-CMD invoke runGunicornCassandraParams -p ${PORT}
+CMD invoke runGunicornCassandraAsyncParamsComments -p ${PORT}
