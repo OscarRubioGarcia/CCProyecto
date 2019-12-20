@@ -27,9 +27,13 @@ class GestorNoticias(object):
         return news.save().get_data()
 
     def addWithDataAll(self, data):
-        news = Noticia.create(id=uuid.UUID(data["id"]), titulo=data["titulo"], descripcion=data["descripcion"],
-                              campus=data["campus"]).save()
-
+		try:
+            news = Noticia.objects(id=data["id"]).if_exists().update(titulo=data["titulo"], descripcion=data["descripcion"], campus=data["campus"])
+        except LWTException  as e:
+			news = Noticia.create(id=uuid.UUID(data["id"]), titulo=data["titulo"], descripcion=data["descripcion"], campus=data["campus"])
+			if not self._checkEnoughData(news):
+				raise NotEnoughDataInNews
+			news.save()
         return news.get_data()
 
     def deleteById(self, data):

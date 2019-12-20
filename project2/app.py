@@ -25,16 +25,13 @@ def abortar_ruta_inexistente(ruta):
     abort(404, message="Error 404. Ruta {} Inexistente".format(ruta))
 
 
-def json_api(f):
-    @wraps(f)
-    def decorated_function(*args, **kwargs):
-        result = f(*args, **kwargs)
+def json_api(data):
+    @wraps(data)
+    def ensure_json(*args, **kwargs):
+        result = data(*args, **kwargs)
         json_result = to_json(result)
-        return Response(response=json_result,
-                        status=200,
-                        mimetype="application/json")
-
-    return decorated_function
+        return Response(response=json_result, status=200, mimetype="application/json")
+    return ensure_json
 
 
 @api.route('/', defaults={"path": ""})
