@@ -1,9 +1,8 @@
 ---
 execution:
-- concurrency: 1
+- concurrency: 10
   ramp-up: 10s
   hold-for: 60s
-  iterations: 1
   scenario: basic-services-test
 
 

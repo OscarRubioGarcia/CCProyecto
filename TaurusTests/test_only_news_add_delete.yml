@@ -15,13 +15,6 @@ scenarios:
       headers:
           Content-Type: application/json
       body-file: json_add_specific_news.json
-    - http://localhost:5000/status
-    - http://localhost:5000/news
-    - url: http://localhost:5000/news/findById
-      method: POST
-      headers:
-          Content-Type: application/json
-      body-file: json_del_news.json
     - url: http://localhost:5000/news/deleteById
       method: DELETE
       headers:

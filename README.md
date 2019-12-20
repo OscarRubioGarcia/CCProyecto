@@ -71,17 +71,23 @@ Para más información con relación a la experimentación realizada y la creaci
 
 ## Benchmarks
 
-Con el objetivo de poder comprobar las facultades de nuestro sistema se utilizo el software Taurus para la realización de Benchmarks. Este software fue testeado contra nuestro sistema desplegado en el Docker especificado anteriormente.
+Con el objetivo de poder comprobar las facultades de nuestro sistema se utilizo el software Taurus para la realización de Benchmarks. Este software fue testeado localmente contra nuestro sistema desplegado en el Docker especificado anteriormente.
 
 ## Resultados
 
-Estos son los resultados conseguidos de la experimentación con Taurus, en el microservicio de Noticias.
+Estos son los resultados conseguidos de la experimentación con Taurus, en el microservicio de Noticias en cuestion de lecturas.
+
+![imagen Taurus vista](https://raw.githubusercontent.com/OscarRubioGarcia/CCProyecto/master/docs/Taurus/Taurus_test_only_view.png)
+
+Estos son los resultados conseguido de la experimentación con Taurus, en el microservicio de Noticias en cuestion de todos los servicios.
+
+![imagen Taurus vista](https://raw.githubusercontent.com/OscarRubioGarcia/CCProyecto/master/docs/Taurus/Taurus_test_news_all.png)
 
 ## Fichero de Prestaciones
 
 Prestaciones: taurus_tests.yml
 
-Para saber más acerca de la experimentación realizada y los cambios realizados en los archivos relacionados, sigua el siguiente [enlace a la descripción de la experimentación. ]( https://github.com/OscarRubioGarcia/CCProyecto/blob/master/docs/Taurus.md )
+Para saber más acerca de la experimentación realizada y los cambios realizados en los archivos relacionados, sigua el siguiente [enlace a la descripción de la experimentación con Taurus. ]( https://github.com/OscarRubioGarcia/CCProyecto/blob/master/docs/Taurus.md )
 
 ## Despliegue del proyecto
 
