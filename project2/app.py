@@ -99,7 +99,7 @@ def to_json(data):
         if hasattr(obj, 'isoformat'):
             return obj.isoformat()
         else:
-            raise TypeError('Object of type %s with value of %s is not JSON serializable' % (type(obj), repr(obj)))
+            raise TypeError('El objeto con typo %s y valor %s no se puede serializar a JSON' % (type(obj), repr(obj)))
 
     return json.dumps(data, default=handler)
 

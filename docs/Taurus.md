@@ -8,6 +8,8 @@ Inicialmente se realizado un cambio general de la estructura que estaba siendo u
 
 Enlace a la documentacion de [blueprints.](https://flask.palletsprojects.com/en/1.0.x/blueprints/)
 
+Un sistema para la aseguración del tipo de datos aceptados en nuestro sistema y para asegurarnos que las salidas de nuestro sistema también fueran solo datos json, fue implementado. Se siguió el diseño inicial propuesto en este [tutorial.]( http://rmehan.com/2016/04/18/using-cassandra-with-flask/). Adicionalmente este tutorial fue de gran ayuda para comprender la integración de cassandra en el sistema.
+
 Para la correcta implementación del Cache a nuestro sistema y conseguir evitar las referencias circulares en nuestro código se requirió de la creación de la clase Cache, la cual esta encargada de ser el punto de acceso para nuestros blueprints con el fin de utilizar el cache de la app.
 
 Previamente a la comprobación del servicio prestado con Taurus, se incorporo un sistema de cache en el microservicio, proporcionado por Flask-Caching. Utilizando este servicio esperamos conseguir una mejora a la hora de servir servicios similares a los clientes.

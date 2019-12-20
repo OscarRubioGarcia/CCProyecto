@@ -73,6 +73,8 @@ Para más información con relación a la experimentación realizada y la creaci
 
 Con el objetivo de poder comprobar las facultades de nuestro sistema se utilizo el software Taurus para la realización de Benchmarks. Este software fue testeado localmente contra nuestro sistema desplegado en el Docker especificado anteriormente.
 
+Nuestro objetivo principal será la capacidad de soportar 1000 peticiones por segundo de 10 usuarios en la función principal de nuestro sistema, la lectura de noticias. Adicionalmente comprobaremos cuantas peticiones por segundo son soportadas por nuestro sistema durante la operación más costosa que puede soportar la BD cassandra, está siendo la eliminación de datos.
+
 ## Resultados
 
 Estos son los resultados conseguidos de la experimentación con Taurus, en el microservicio de Noticias en cuestion de lecturas.
