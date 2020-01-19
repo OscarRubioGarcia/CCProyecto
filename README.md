@@ -83,9 +83,11 @@ Para saber más acerca de la experimentación realizada y los cambios realizados
 
 ## Provisionamiento
 
-Realizaremos un despliegue virtual de nuestro sistema en una maquina virtual alojada en el servidor de Azure.
+Realizaremos un despliegue virtual de nuestro sistema en una máquina virtual alojada en el servidor de Azure.
 
+Todo el despliegue de la máquina virtual y el provisionamiento realizado utilizando Ansible a sido descrito en el siguiente [documento.](https://github.com/OscarRubioGarcia/CCProyecto/blob/master/docs/Provisionamiento.md)
 
+Los ficheros de aprovisionamiento están localizados en el directorio **"provision"**.
 
 ## Despliegue del proyecto
 

@@ -18,9 +18,7 @@ Por ello realizaremos los siguientes comandos para conseguir tener ansible insta
 Finalmente comprobaremos la instalación utilizando
 * ansible --version
 
-Crearemos nuestra máquina virtual de azure mediante su CLI shell. Este shell lo podremos instalar o podremos utilizar su cliente online.
-
-[cliente online.](https://shell.azure.com/bash)
+Crearemos nuestra máquina virtual de azure mediante su CLI shell. Este shell lo podremos instalar o podremos utilizar su [cliente online.](https://shell.azure.com/bash)
 
 Inicialmente seleccionamos la creación de un lugar de almacenamiento gratuito. Tras la creación ya podremos comenzar a la creación de las máquinas virtuales.
 
