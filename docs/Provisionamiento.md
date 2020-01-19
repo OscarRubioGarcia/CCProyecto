@@ -142,6 +142,10 @@ En este primer archivo de provisionamiento nos dedicamos a la instalación princ
 
 Utilizamos un loop para realizar la instalación de múltiples programas. Adicionalmente utilizamos become: yes para realizar estos comandos como superusuario.
 
+En este primer script usamos apt para la instalación de python3 y los paquetes necesarios para la instalación de pip3, estos siendo build-essential, libssl-dev, libffi-dev y python-dev. Finalmente instalamos python3-pip y python-pip por si pip3 no fuera a funcionar en alguna situación.
+
+Instalamos git y bash debido a que son programas que nos serán de gran uso en el futuro, git para la descarga del microservicio y bash por si fuéramos a necesitar ejecutar pequeños scripts.
+
 Inicialmente utilizamos **import_playbook: pythonCheck.yml** para incorporar otro script de provisionamiento a este, el cual realiza una comprobación e instalación de python2.7 si este no fuera a estar instalado en el sistema.
 
 Podemos ver el archivo a continuación:
@@ -167,6 +171,12 @@ Podemos ver el archivo a continuación:
 ```
 
 En este archivo como hemos descrito anteriormente, nos aseguramos de que para nuestro host webservers, el usuario XXX realiza la comprobación de la existencia de python 2 en el sistema y si este no fuera a estar instalado lo instala. Realizamos este paso anterior a todos los demás debido a que si no fuera a estar instalado es posible que esto nos llevara a errores.
+
+La primera tarea se asegurar de comprobar mediante el "test" si python existe en nuestro sistema. Registra este valor el la variable check_python que especificamos.
+
+La segunda tarea se encarga de instalar python 2 solo si este no fue encontrado en el sistema anteriormente. Realiza esta comprobacion mediante el registro check_python.
+
+Realizamos la tarea de la instalación de python mediante el uso de "raw" debido a que es recomendado en la [documentación de ansible.](https://docs.ansible.com/ansible/latest/modules/raw_module.html)
 
 A continuación volvemos al archivo **core.yml**, en el cual especificamos, adicionalmente al host y al usuario, el uso de un rol llamado **cassandra-3.11.4**. Este rol fue creado manualmente con el comando especificado anteriormente y sigue el contiene lo siguiente:
 
@@ -237,6 +247,12 @@ En su carpeta **Tasks**:
 
 Este archivo es bastante auto explicativo, básicamente realizamos todos los pasos necesarios para garantizar la correcta instalación de cassandra. Tenemos especial cuidado durante la instalación de openjdk-8 específicamente debido a que cassandra tiene problemas con iteraciones futuras de este software. 
 
+* Las primeras 5 tareas simplemente instalan paquetes necesarios para el despliegue de cassandra o actualizan los paquetes del sistema. Estos paquetes son software-properties-common (para el posible uso de ppas), openjdk-8-jdk, ca-certificates y openjdk-8-jre.
+
+* La siguiente tarea se encarga de comprobar que la VM asignada en el SO sea opensdk-8. Queremos específicamente esta versión debido a problemas de compatibilidad de cassandra con otras.
+
+* Las ultimas 4 tareas se encargan de la copia de cassandra, extracción de cassandra, reemplazo del archivo jvm en la base de datos cassandra y actualización final de paquetes del sistema.
+
 Las actualizaciones que realizamos durante el script se deben a que los servicios cloud necesitan actualizar su cache manualmente para poder identificar paquetes que posiblemente no hubieran identificado anteriormente.
 
 Utilizamos los 2 archivos especificados en la carpeta de **Files**, de esta manera aseguramos que siempre va a poder ser desplegable el servidor de cassandra, utilizando nuestro fichero jvm personalizado.
@@ -281,7 +297,21 @@ Utilizamos los 2 archivos especificados en la carpeta de **Files**, de esta mane
         virtualenv: /CCProyecto/venv
 ```
 
-Este último archivo de provisionamiento sería el encargado de realizar los pasos exclusivos de nuestro microservicio de noticias. Estos pasos serian la creación del directorio si este no existiera, el clonado del microservicio al directorio, la instalación del entorno virtual en el directorio y la instalación de los requisitos específicos en este entorno virtual. En un futuro se podría limpiar aquellos archivos creados al clonar el repositorio en la máquina virtual, pues no son todos los archivos clonados necesarios.
+Este último archivo de provisionamiento sería el encargado de realizar los pasos exclusivos de nuestro microservicio de noticias. Estos pasos serian la creación del directorio si este no existiera, el clonado del microservicio al directorio, la instalación del entorno virtual en el directorio y la instalación de los requisitos específicos en este entorno virtual. 
+
+Resaltaremos el uso de **import_playbook: core.yml** una vez más, esta vez será para encadenar el playbook creado anteriormente (core.yml) junto con este, asegurando la instalación de todos los paquetes básicos.
+
+Las tareas de este script serán definidas a continuación:
+
+* La primera tarea utiliza "become: yes" con el fin de tener los permisos necesarios para crear un nuevo directorio donde guardaremos nuestro microservicio. Se utilizo la [documentación de ansible.](https://docs.ansible.com/ansible/latest/modules/file_module.html)
+
+* La segunda tarea realiza la descarga del repositorio donde se encuentra nuestro microservicio en github al directorio especificado.
+
+* La tercera tarea se encarga de la instalación del entorno virtual mediante pip3 y utilizando permisos de root. Es posible que esta tarea pueda de ser realizada en el script **core.yml** en vez de en este.
+
+* La última tarea se encarga de la instalación de todos los paquetes y librerías especificadas en el requirements.txt de nuestro proyecto. Estos requisitos son instalados en el directorio especificado. Se siguió la [documentación oficial de ansible.](https://docs.ansible.com/ansible/latest/modules/pip_module.html)
+
+En un futuro se podría limpiar aquellos archivos creados al clonar el repositorio en la máquina virtual, pues no son todos los archivos clonados necesarios.
 
 ## Despliegue
 
