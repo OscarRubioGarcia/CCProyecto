@@ -75,21 +75,17 @@ Con el objetivo de poder comprobar las facultades de nuestro sistema se utilizo 
 
 Nuestro objetivo principal será la capacidad de soportar 1000 peticiones por segundo de 10 usuarios en la función principal de nuestro sistema, la lectura de noticias. Adicionalmente comprobaremos cuantas peticiones por segundo son soportadas por nuestro sistema durante la operación más costosa que puede soportar la BD cassandra, está siendo la eliminación de datos.
 
-## Resultados
-
-Estos son los resultados conseguidos de la experimentación con Taurus, en el microservicio de Noticias en cuestion de lecturas.
-
-![imagen Taurus vista](https://raw.githubusercontent.com/OscarRubioGarcia/CCProyecto/master/docs/Taurus/Taurus_test_only_view.png)
-
-Estos son los resultados conseguido de la experimentación con Taurus, en el microservicio de Noticias en cuestion de todos los servicios.
-
-![imagen Taurus vista](https://raw.githubusercontent.com/OscarRubioGarcia/CCProyecto/master/docs/Taurus/Taurus_test_news_all.png)
-
 ## Fichero de Prestaciones
 
 Prestaciones: taurus_tests.yml
 
 Para saber más acerca de la experimentación realizada y los cambios realizados en los archivos relacionados, sigua el siguiente [enlace a la descripción de la experimentación con Taurus. ]( https://github.com/OscarRubioGarcia/CCProyecto/blob/master/docs/Taurus.md )
+
+## Provisionamiento
+
+Realizaremos un despliegue virtual de nuestro sistema en una maquina virtual alojada en el servidor de Azure.
+
+
 
 ## Despliegue del proyecto
 
