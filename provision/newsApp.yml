@@ -1,0 +1,41 @@
+---
+
+- import_playbook: core.yml
+
+- hosts: webservers
+  user: XXX
+
+  tasks:
+    - name: Crear directorio CCProyecto
+      become: yes
+      file:
+        path: /CCProyecto
+        state: directory
+        mode: '0755'
+
+    # Download microservice 1 (News) from github
+    - name: Descarga de microservicio 1 (News) de Github.
+      become: yes
+      git: 
+        repo: https://github.com/OscarRubioGarcia/CCProyecto.git
+        version: master
+        dest: /CCProyecto
+
+    - name: Install virtualenv via pip
+      pip:
+        name: virtualenv
+        executable: pip3
+      become: yes
+      become_user: root
+
+    - name: Instalar requisitos del App.
+      become: yes
+      pip: 
+        requirements: /CCProyecto/requirements.txt
+        virtualenv: /CCProyecto/venv
+
+#    - name: Initialize App News
+#      shell: 
+#        cmd: invoke runGunicornAsyncParams --port 5000
+#      args:
+#        chdir: /CCProyecto

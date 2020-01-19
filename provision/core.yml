@@ -1,0 +1,23 @@
+---
+
+- import_playbook: pythonCheck.yml
+
+- hosts: webservers
+  user: XXX
+  roles: 
+    - { role: cassandra-3.11.4 }
+  tasks:
+    # Core Programs to be Installed
+    - name: Instalacion de programas basicos.
+      become: yes
+      action: apt pkg={{ item }} state=latest
+      loop:
+        - python3
+        - build-essential
+        - libssl-dev
+        - libffi-dev
+        - python-dev
+        - python3-pip
+        - python-pip
+        - bash
+        - git

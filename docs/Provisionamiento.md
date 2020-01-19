@@ -3,11 +3,21 @@
 
 ## Configuración de Virtual Machine en Azure
 
+Principalmente describiré brevemente el tipo de máquina que estoy buscando para el sistema actual.
+
+La máquina que crear será una sencilla, sin necesidad de procesadores increíblemente potentes y que utiliza un SO con el cual este familiarizado, pues como este será el primer provisionamiento que creare me gustaría realizarlo en una maquina con la cual pudiera verme trabajando en el futuro.
+
+Por ello nos decantaremos por el siguiente SO:
+
+* Sistema Operativo: Ubuntu, cualquier versión medianamente actual (18).
+
+## Proceso de Creación
+
 Inicialmente crearemos una cuenta en azure.com para poder tener acceso a las máquinas virtuales de azure que utilizaremos en el futuro.
 
 Nos aseguraremos la instalación de ansible en nuestro sistema Ubuntu siguiendo las reglas establecidas por su web oficial.
 
-[enlace a web ansible oficial.](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html#installing-ansible-on-ubuntu)
+[Enlace a web ansible oficial.](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html#installing-ansible-on-ubuntu)
 
 Por ello realizaremos los siguientes comandos para conseguir tener ansible instalado.
 
@@ -30,14 +40,14 @@ Creamos un grupo de recursos.
 
 Tras hacer esto nuestra máquina virtual Ubuntu será creada bajo el nombre de CCVM para el grupo UGRResrouceGroup, usando las credenciales de admin XXX y creando las claves ssh.
 
-''' python
+```
 az vm create \
   --resource-group UGRResourceGroup \
   --name CCVM2 \
   --image UbuntuLTS \
   --admin-username XXX \
   --generate-ssh-keys
-'''
+```
 
 En nuestro caso la máquina virtual a sido generada con la siguiente dirección ip publica 23.97.156.34.
 
@@ -73,11 +83,224 @@ A partir de este punto deberemos acceder a la máquina virtual y empezar la inst
 
 Tras la instalación de ansible en el sistema podemos comenzar a desarrollar playbooks para nuestra máquina virtual.
 
+Principalmente indicaremos al archivo hosts de ansible el servidor web que queremos provisionar.
 
+```
+[webservers]
+23.97.156.34
+```
 
+Comprobamos que el fichero a sido configurado correctamente y que nuestra conexion con el servidor via ssh es correcta mediante:
 
+* ansible all -m ping -u XXX
 
+Para la ejecucion de playbooks utilizaremos el comando:
+
+* ansible-playbook testplaybook.yml
+
+Crearemos un rol para nuestros playbooks comunes, de esta manera si necesitamos reutilizar este rol con otras maquinas virtuales podremos realizarlo de manera simple y facil.
+
+* ansible-galaxy init role
+
+Para la instalación de cassandra daremos uso de ansible-galaxy, de esta forma nos descargaremos el rol encargado de la instalación de cassadnra para nuestra máquina virtual.
+
+* ansible-galaxy install cowops.debian-cassandra
+
+** Debido a problemas con el uso del rol provisto de ansible-galaxy, se decidió crear un rol propio que se encargara de cassandra manualmente.**
+
+### Archivo de provisionamiento basico
+
+#### **core.yml**
+
+```
+---
+
+- import_playbook: pythonCheck.yml
+
+- hosts: webservers
+  user: XXX
+  roles: 
+    - { role: cassandra-3.11.4 }
+  tasks:
+    # Core Programs to be Installed
+    - name: Instalacion de programas basicos.
+      become: yes
+      action: apt pkg={{ item }} state=latest
+      loop:
+        - python3
+        - build-essential
+        - libssl-dev
+        - libffi-dev
+        - python-dev
+        - python3-pip
+        - python-pip
+        - bash
+        - git
+```
+
+En este primer archivo de provisionamiento nos dedicamos a la instalación principalmente del software que consideramos común entre nuestros microservicios, aunque si fuera a ser necesario utilizar una base de datos diferente entre nuestros microservicios, se podría eliminar la incorporación del rol "cassandra".
+
+Utilizamos un loop para realizar la instalación de múltiples programas. Adicionalmente utilizamos become: yes para realizar estos comandos como superusuario.
+
+Inicialmente utilizamos **import_playbook: pythonCheck.yml** para incorporar otro script de provisionamiento a este, el cual realiza una comprobación e instalación de python2.7 si este no fuera a estar instalado en el sistema.
+
+Podemos ver el archivo a continuación:
+
+#### **pythonCheck.yml**
+```
+---
+- hosts: webservers
+  user: XXX
+  gather_facts: false
+
+  tasks:
+    - name: Check for the existence of python 2
+      raw: test -e /usr/bin/python
+      changed_when: false
+      failed_when: false
+      register: check_python
+
+    # Install 
+    - name: Install Python if it doesnt exist
+      raw: apt -y update && apt install -y python-minimal
+      when: check_python.rc != 0
+```
+
+En este archivo como hemos descrito anteriormente, nos aseguramos de que para nuestro host webservers, el usuario XXX realiza la comprobación de la existencia de python 2 en el sistema y si este no fuera a estar instalado lo instala. Realizamos este paso anterior a todos los demás debido a que si no fuera a estar instalado es posible que esto nos llevara a errores.
+
+A continuación volvemos al archivo **core.yml**, en el cual especificamos, adicionalmente al host y al usuario, el uso de un rol llamado **cassandra-3.11.4**. Este rol fue creado manualmente con el comando especificado anteriormente y sigue el contiene lo siguiente:
+
+En su carpeta **Files**:
+
+Existen 2 archivos, 1 de ellos siendo la base de datos cassandra-3.11.4 en formato tar.gz y el otro un archivo jvm que será utilizado por la base de datos unas vez la despleguemos en la máquina.
+
+En su carpeta **Tasks**:
+
+#### **main.yml**
+```
+---
+# tasks file for cassandra-3.11.4
+- name: Install add-apt-repostory
+  become: yes
+  apt: 
+     name: software-properties-common 
+     state: latest
+
+- name: Upgrade and Update 
+  become: yes
+  apt:
+     upgrade: yes
+     update_cache: yes
+
+- name: Install Open jdk 8
+  become: yes
+  apt: 
+     name: openjdk-8-jdk
+     state: latest
+
+- name: Install certificates
+  become: yes
+  apt: 
+     name: ca-certificates
+     state: latest
+
+- name: Install Open jdk jre 8
+  become: yes
+  apt: 
+     name: openjdk-8-jre
+     state: latest
+
+- name: Set the correct java version as selected
+  become: yes
+  alternatives:
+     name: java
+     path: /usr/lib/jvm/java-1.8.0-openjdk-amd64/bin/java
+
+- name: Copy Cassandra tar
+  copy:
+     src: apache-cassandra-3.11.4-bin.tar.gz
+     dest: /tmp/apache-cassandra-3.11.4-bin.tar.gz
+
+- name: Extract Cassandra
+  command: tar -xvf /tmp/apache-cassandra-3.11.4-bin.tar.gz
+
+- name: Copy jvm fix file in Cassandra
+  copy:
+     src: jvm.options
+     dest: /home/XXX/apache-cassandra-3.11.4/conf/
+
+- name: Update 
+  become: yes
+  apt:
+     update_cache: yes
+```
+
+Este archivo es bastante auto explicativo, básicamente realizamos todos los pasos necesarios para garantizar la correcta instalación de cassandra. Tenemos especial cuidado durante la instalación de openjdk-8 específicamente debido a que cassandra tiene problemas con iteraciones futuras de este software. 
+
+Las actualizaciones que realizamos durante el script se deben a que los servicios cloud necesitan actualizar su cache manualmente para poder identificar paquetes que posiblemente no hubieran identificado anteriormente.
+
+Utilizamos los 2 archivos especificados en la carpeta de **Files**, de esta manera aseguramos que siempre va a poder ser desplegable el servidor de cassandra, utilizando nuestro fichero jvm personalizado.
+
+#### **newsApp.yml**
+
+```
+---
+
+- import_playbook: core.yml
+
+- hosts: webservers
+  user: XXX
+
+  tasks:
+    - name: Crear directorio CCProyecto
+      become: yes
+      file:
+        path: /CCProyecto
+        state: directory
+        mode: '0755'
+
+    # Download microservice 1 (News) from github
+    - name: Descarga de microservicio 1 (News) de Github.
+      become: yes
+      git: 
+        repo: https://github.com/OscarRubioGarcia/CCProyecto.git
+        version: master
+        dest: /CCProyecto
+
+    - name: Install virtualenv via pip
+      pip:
+        name: virtualenv
+        executable: pip3
+      become: yes
+      become_user: root
+
+    - name: Instalar requisitos del App.
+      become: yes
+      pip: 
+        requirements: /CCProyecto/requirements.txt
+        virtualenv: /CCProyecto/venv
+```
+
+Este último archivo de provisionamiento sería el encargado de realizar los pasos exclusivos de nuestro microservicio de noticias. Estos pasos serian la creación del directorio si este no existiera, el clonado del microservicio al directorio, la instalación del entorno virtual en el directorio y la instalación de los requisitos específicos en este entorno virtual. En un futuro se podría limpiar aquellos archivos creados al clonar el repositorio en la máquina virtual, pues no son todos los archivos clonados necesarios.
+
+## Despliegue
+
+A continuación tendríamos nuestra máquina virtual ya provisionada y lista para ser desplegada.
+
+Para la realización del despliegue se requeriría principalmente iniciar la base de datos cassandra, posiblemente con un daemon en systemd.
+
+Tras iniciar la base de datos, el sistema debería de poder ser inicializado mediante la activación del entorno virtual y la llamada de invoke runGunicornAsyncParams.
+
+**Este último apartado no fue posible automatizar/testear actualmente (19-01-20).**
 
 ## Documentación
 
 Se utilizaron los tutoriales de Azure promovidos en su página [oficial.](https://docs.microsoft.com/es-es/azure/virtual-machines/linux/tutorial-manage-vm)
+
+Para la instalación de Python en ansible se consulto el siguiente [enlace.]( https://relativkreativ.at/articles/how-to-install-python-with-ansible)
+
+Se siguió esta [guía]( https://attacomsian.com/blog/change-default-java-version-ubuntu) para la instalación de openjdk8 y el siguiente [link]( https://docs.ansible.com/ansible/2.4/alternatives_module.html) para la configuración de versiones en ansible.
+
+Se siguió inicialmente esta [guía]( https://blog.deiser.com/es/primeros-pasos-con-ansible) para la comprensión inicial de ansible.
+
+Se consulto la [web oficial de ansbile]( https://docs.ansible.com/ansible/latest/modules/git_module.html), para el desarrollo del script de descarga de git.

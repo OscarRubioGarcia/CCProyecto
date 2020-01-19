@@ -1,0 +1,67 @@
+---
+# tasks file for cassandra-3.11.4
+- name: Install add-apt-repostory
+  become: yes
+  apt: 
+     name: software-properties-common 
+     state: latest
+
+- name: Upgrade and Update 
+  become: yes
+  apt:
+     upgrade: yes
+     update_cache: yes
+
+- name: Install Open jdk 8
+  become: yes
+  apt: 
+     name: openjdk-8-jdk
+     state: latest
+
+- name: Install certificates
+  become: yes
+  apt: 
+     name: ca-certificates
+     state: latest
+
+- name: Install Open jdk jre 8
+  become: yes
+  apt: 
+     name: openjdk-8-jre
+     state: latest
+
+- name: Set the correct java version as selected
+  become: yes
+  alternatives:
+     name: java
+     path: /usr/lib/jvm/java-1.8.0-openjdk-amd64/bin/java
+
+- name: Copy Cassandra tar
+  copy:
+     src: apache-cassandra-3.11.4-bin.tar.gz
+     dest: /tmp/apache-cassandra-3.11.4-bin.tar.gz
+
+- name: Extract Cassandra
+  command: tar -xvf /tmp/apache-cassandra-3.11.4-bin.tar.gz
+
+- name: Copy jvm fix file in Cassandra
+  copy:
+     src: jvm.options
+     dest: /home/XXX/apache-cassandra-3.11.4/conf/
+
+#- name: Run Cassandra from bin folder
+#  command: ./cassandra -fR
+#  args:
+#    chdir: /home/XXX/apache-cassandra-3.11.4/bin/ 
+#  async: 60
+
+#- name: Get Repositoy for systemd
+#  apt_repository: 
+#     repo: 'ppa:pitti/systemd'
+
+- name: Update 
+  become: yes
+  apt:
+     update_cache: yes
+
+

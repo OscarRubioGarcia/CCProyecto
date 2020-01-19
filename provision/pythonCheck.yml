@@ -1,0 +1,17 @@
+---
+- hosts: webservers
+  user: XXX
+  gather_facts: false
+
+  tasks:
+    - name: Check for the existence of python 2
+      raw: test -e /usr/bin/python
+      changed_when: false
+      failed_when: false
+      register: check_python
+
+    # Install 
+    - name: Install Python if it doesnt exist
+      raw: apt -y update && apt install -y python-minimal
+      when: check_python.rc != 0
+

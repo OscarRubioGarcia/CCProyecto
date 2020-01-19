@@ -87,7 +87,7 @@ Realizaremos un despliegue virtual de nuestro sistema en una máquina virtual al
 
 Todo el despliegue de la máquina virtual y el provisionamiento realizado utilizando Ansible a sido descrito en el siguiente [documento.](https://github.com/OscarRubioGarcia/CCProyecto/blob/master/docs/Provisionamiento.md)
 
-Los ficheros de aprovisionamiento están localizados en el directorio **"provision"**.
+Los ficheros de aprovisionamiento están localizados en el directorio [**"provision"**.](https://github.com/OscarRubioGarcia/CCProyecto/tree/master/provision)
 
 ## Despliegue del proyecto
 
