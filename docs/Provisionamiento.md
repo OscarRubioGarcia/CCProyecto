@@ -83,7 +83,7 @@ A partir de este punto deberemos acceder a la máquina virtual y empezar la inst
 
 Tras la instalación de ansible en el sistema podemos comenzar a desarrollar playbooks para nuestra máquina virtual.
 
-Principalmente indicaremos al archivo hosts de ansible el servidor web que queremos provisionar.
+Principalmente indicaremos al archivo hosts de ansible el servidor web que queremos provisionar. Adicionalmente, podremos asignarle un nombre especifico el cual usaremos para dirigirnos a esa VM, en nuestro caso usaremos webservers.
 
 ```
 [webservers]
