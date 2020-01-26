@@ -50,9 +50,9 @@ def runGunicorn(ctx):
 def runGunicornParams(ctx, port="5000"):
     if port == "DEFAULT":
         port = 5000
-        ctx.run("gunicorn -b 0.0.0.0:%s \"project.app:create_app()\" " % port)
+        ctx.run("gunicorn -b 127.0.0.1:%s \"project.app:create_app()\" " % port)
     else:
-        ctx.run("gunicorn -b 0.0.0.0:%s \"project.app:create_app()\" " % port)
+        ctx.run("gunicorn -b 127.0.0.1:%s \"project.app:create_app()\" " % port)
 
 
 @task(help={'port': "Port number that gunicorn will use when deploying the microservice. (Usable for Linux)"})
@@ -65,9 +65,9 @@ def runGunicornCassandraParams(ctx, port="5000"):
     time.sleep(3)
     if port == "DEFAULT":
         port = 5000
-        ctx.run("gunicorn -b 0.0.0.0:%s \"project.CassandraLaunch:create_app()\" " % port)
+        ctx.run("gunicorn -b 127.0.0.1:%s \"project.CassandraLaunch:create_app()\" " % port)
     else:
-        ctx.run("gunicorn -b 0.0.0.0:%s \"project.CassandraLaunch:create_app()\" " % port)
+        ctx.run("gunicorn -b 127.0.0.1:%s \"project.CassandraLaunch:create_app()\" " % port)
 
 
 @task(help={'port': "Port number that gunicorn will use when deploying the microservice. (Usable for Linux)"})
@@ -76,9 +76,9 @@ def runGunicornAsyncParams(ctx, port="5000"):
         port = 5000
         # --workers=5 --threads=2
         # --worker-class gevent --workers=3
-        ctx.run("gunicorn -b 0.0.0.0:%s --workers=5 --threads=25 \"project.CassandraLaunch:create_app()\" " % port)
+        ctx.run("gunicorn -b 127.0.0.1:%s --workers=5 --threads=25 \"project.CassandraLaunch:create_app()\" " % port)
     else:
-        ctx.run("gunicorn -b 0.0.0.0:%s --workers=5 --threads=25 \"project.CassandraLaunch:create_app()\" " % port)
+        ctx.run("gunicorn -b 127.0.0.1:%s --workers=5 --threads=25 \"project.CassandraLaunch:create_app()\" " % port)
 
 
 @task(help={'port': "Port number that waitress will use when deploying the microservice. (Usable for Windows)"})
