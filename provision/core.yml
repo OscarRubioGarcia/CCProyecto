@@ -21,3 +21,4 @@
         - python-pip
         - bash
         - git
+        - nginx

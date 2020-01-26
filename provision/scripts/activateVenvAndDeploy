@@ -1,0 +1,3 @@
+
+source ./venv/bin/activate &&
+invoke runGunicornAsyncParams -p 5050 &

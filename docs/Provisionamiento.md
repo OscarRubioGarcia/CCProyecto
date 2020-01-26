@@ -32,7 +32,7 @@ Crearemos nuestra máquina virtual de azure mediante su CLI shell. Este shell lo
 
 Inicialmente seleccionamos la creación de un lugar de almacenamiento gratuito. Tras la creación ya podremos comenzar a la creación de las máquinas virtuales.
 
-Comenzaremos tal como nos explica el [tutorial de azure.](https://docs.microsoft.com/es-es/azure/virtual-machines/linux/quick-create-cli?toc=/azure/virtual-machines/linux/toc.json).
+Comenzaremos tal como nos explica el [tutorial de azure.](https://docs.microsoft.com/es-es/azure/virtual-machines/linux/quick-create-cli?toc=/azure/virtual-machines/linux/toc.json)
 
 Creamos un grupo de recursos.
 
@@ -69,7 +69,7 @@ Tras conseguir un tamaño apropiado podríamos escalar nuestra máquina virtual 
 
 Aquí tenemos un extracto del listado mostrado:
 
-![Foto Tabla resutlados.](https://raw.githubusercontent.com/OscarRubioGarcia/CCProyecto/master/docs/AzureSizes.jpg)
+![Foto Tabla resultados.](https://raw.githubusercontent.com/OscarRubioGarcia/CCProyecto/master/docs/AzureSizes.jpg)
 
 Tras un breve periodo de tiempo nuestra máquina virtual será creada y podremos comprobar su funcionamiento de la siguiente forma.
 
@@ -136,6 +136,7 @@ Para la instalación de cassandra daremos uso de ansible-galaxy, de esta forma n
         - python-pip
         - bash
         - git
+		- nginx
 ```
 
 En este primer archivo de provisionamiento nos dedicamos a la instalación principalmente del software que consideramos común entre nuestros microservicios, aunque si fuera a ser necesario utilizar una base de datos diferente entre nuestros microservicios, se podría eliminar la incorporación del rol "cassandra".
@@ -295,6 +296,25 @@ Utilizamos los 2 archivos especificados en la carpeta de **Files**, de esta mane
       pip: 
         requirements: /CCProyecto/requirements.txt
         virtualenv: /CCProyecto/venv
+		
+    - name: Copy file to folder
+      copy: 
+        src: /home/oscar/Desktop/scripts/activateVenvAndDeploy
+        dest: /home/XXX/CCProyecto/activateVenvAndDeploy
+      become: yes
+
+    - name: Give permissions to file
+      file:
+        dest: /home/XXX/CCProyecto/activateVenvAndDeploy
+        mode: a+x
+      become: yes
+
+    - name: Initialize App News
+      shell: ./activateVenvAndDeploy
+      args:
+        chdir: /home/XXX/CCProyecto
+      become: yes
+
 ```
 
 Este último archivo de provisionamiento sería el encargado de realizar los pasos exclusivos de nuestro microservicio de noticias. Estos pasos serian la creación del directorio si este no existiera, el clonado del microservicio al directorio, la instalación del entorno virtual en el directorio y la instalación de los requisitos específicos en este entorno virtual. 
@@ -309,7 +329,9 @@ Las tareas de este script serán definidas a continuación:
 
 * La tercera tarea se encarga de la instalación del entorno virtual mediante pip3 y utilizando permisos de root. Es posible que esta tarea pueda de ser realizada en el script **core.yml** en vez de en este.
 
-* La última tarea se encarga de la instalación de todos los paquetes y librerías especificadas en el requirements.txt de nuestro proyecto. Estos requisitos son instalados en el directorio especificado. Se siguió la [documentación oficial de ansible.](https://docs.ansible.com/ansible/latest/modules/pip_module.html)
+* La cuarta tarea se encarga de la instalación de todos los paquetes y librerías especificadas en el requirements.txt de nuestro proyecto. Estos requisitos son instalados en el directorio especificado. Se siguió la [documentación oficial de ansible.](https://docs.ansible.com/ansible/latest/modules/pip_module.html)
+
+* Las ultimas tareas se encargan de copiar el script de inicialización y despliegue del web service. Simplemente copian el archivo del ordenador host al remoto, le incorporan los permisos necesarios y finalmente lo ejecutan.
 
 En un futuro se podría limpiar aquellos archivos creados al clonar el repositorio en la máquina virtual, pues no son todos los archivos clonados necesarios.
 
@@ -319,9 +341,41 @@ A continuación tendríamos nuestra máquina virtual ya provisionada y lista par
 
 Para la realización del despliegue se requeriría principalmente iniciar la base de datos cassandra, posiblemente con un daemon en systemd.
 
-Tras iniciar la base de datos, el sistema debería de poder ser inicializado mediante la activación del entorno virtual y la llamada de invoke runGunicornAsyncParams.
+** Actualmente el proceso de conversión de cassandra a un daemon no fue posible realizar**
 
-**Este último apartado no fue posible automatizar/testear actualmente (19-01-20).**
+Tras iniciar la base de datos, el sistema debería de poder ser inicializado mediante la activación del entorno virtual y la llamada de invoke runGunicornAsyncParams. Con el fin de automatizar este apartado, el archivo activateVenvAndDeploy fue creado. Este archivo es ejecutado durante el provisionamiento para lanzar el servidor automáticamente una vez termine todo. Este archivo también obtiene los permisos necesarios para su ejecución una vez se termine el provisionamiento.
+
+Se realizaron por lo tanto pruebas utilizando Taurus para poder medir las capacidades de la máquina actual. Estos test fueron realizados en el propio servidor local con el objetivo de llegar a obtener prestaciones similares a los resultados encontrados en el servidor local de nuestra propia máquina.
+
+Se realizo un test Taurus básico utilizado anteriormente:
+
+```
+---
+execution:
+- concurrency: 10
+  ramp-up: 10s
+  hold-for: 60s
+  throughput: 1000
+  steps: 10
+  scenario: basic-services-test
+
+scenarios:
+  basic-services-test:
+    requests:
+    - http://localhost:5000/news
+    - http://localhost:5000/status
+
+reporting:
+- final-stats
+- console
+- blazemeter
+```
+
+Los resultados obtenidos de este test fueron los siguientes:
+
+![Foto resultados.](https://raw.githubusercontent.com/OscarRubioGarcia/CCProyecto/master/docs/TaurusVM/Test_only_local.png)
+
+Estos resultados nos confirman que el servidor actual contiene capacidades similares a nuestra propia máquina, por lo que podemos asumir que cumplirá correctamente con su funcionamiento. Sin embargo si fuera a querer mejorarse el servidor, se debería de intentar mejorar el código interno y el numero de clusters de cassandra, tras lo cual se podría empezar a plantear la idea de mejorar las prestaciones de nuestra maquina remota. Estas prestaciones podrían ser un numero de núcleos mayor, mejora en la memoria ram o incluso un sistema operativo mas ligero del que estamos utilizando o incluso especializado en funciones de servidor.
 
 ## Documentación
 
