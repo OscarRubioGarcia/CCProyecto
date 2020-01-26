@@ -136,7 +136,7 @@ Para la instalación de cassandra daremos uso de ansible-galaxy, de esta forma n
         - python-pip
         - bash
         - git
-		- nginx
+	    - nginx
 ```
 
 En este primer archivo de provisionamiento nos dedicamos a la instalación principalmente del software que consideramos común entre nuestros microservicios, aunque si fuera a ser necesario utilizar una base de datos diferente entre nuestros microservicios, se podría eliminar la incorporación del rol "cassandra".
@@ -333,6 +333,13 @@ Las tareas de este script serán definidas a continuación:
 
 * Las ultimas tareas se encargan de copiar el script de inicialización y despliegue del web service. Simplemente copian el archivo del ordenador host al remoto, le incorporan los permisos necesarios y finalmente lo ejecutan.
 
+El script copiado:
+
+```
+source ./venv/bin/activate &&
+invoke runGunicornAsyncParams -p 5050 &
+```
+
 En un futuro se podría limpiar aquellos archivos creados al clonar el repositorio en la máquina virtual, pues no son todos los archivos clonados necesarios.
 
 ## Despliegue
@@ -341,7 +348,7 @@ A continuación tendríamos nuestra máquina virtual ya provisionada y lista par
 
 Para la realización del despliegue se requeriría principalmente iniciar la base de datos cassandra, posiblemente con un daemon en systemd.
 
-** Actualmente el proceso de conversión de cassandra a un daemon no fue posible realizar**
+**Actualmente el proceso de conversión de cassandra a un daemon no fue posible realizar**
 
 Tras iniciar la base de datos, el sistema debería de poder ser inicializado mediante la activación del entorno virtual y la llamada de invoke runGunicornAsyncParams. Con el fin de automatizar este apartado, el archivo activateVenvAndDeploy fue creado. Este archivo es ejecutado durante el provisionamiento para lanzar el servidor automáticamente una vez termine todo. Este archivo también obtiene los permisos necesarios para su ejecución una vez se termine el provisionamiento.
 
@@ -375,7 +382,9 @@ Los resultados obtenidos de este test fueron los siguientes:
 
 ![Foto resultados.](https://raw.githubusercontent.com/OscarRubioGarcia/CCProyecto/master/docs/TaurusVM/Test_only_local.png)
 
-Estos resultados nos confirman que el servidor actual contiene capacidades similares a nuestra propia máquina, por lo que podemos asumir que cumplirá correctamente con su funcionamiento. Sin embargo si fuera a querer mejorarse el servidor, se debería de intentar mejorar el código interno y el numero de clusters de cassandra, tras lo cual se podría empezar a plantear la idea de mejorar las prestaciones de nuestra maquina remota. Estas prestaciones podrían ser un numero de núcleos mayor, mejora en la memoria ram o incluso un sistema operativo mas ligero del que estamos utilizando o incluso especializado en funciones de servidor.
+Estos resultados nos confirman que el servidor actual contiene capacidades similares a nuestra propia máquina, por lo que podemos asumir que cumplirá correctamente con su funcionamiento. 
+
+Sin embargo si fuera a querer mejorarse el servidor, se debería de intentar mejorar el código interno y el numero de clusters de cassandra, tras lo cual se podría empezar a plantear la idea de mejorar las prestaciones de nuestra maquina remota. Estas prestaciones podrían ser un numero de núcleos mayor, mejora en la memoria ram o incluso un sistema operativo mas ligero del que estamos utilizando o incluso especializado en funciones de servidor.
 
 ## Documentación
 
