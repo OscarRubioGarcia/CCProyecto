@@ -72,6 +72,8 @@ def runGunicornCassandraParams(ctx, port="5000"):
 
 @task(help={'port': "Port number that gunicorn will use when deploying the microservice. (Usable for Linux)"})
 def runGunicornAsyncParams(ctx, port="5000"):
+	ctx.run("python project/scripts/Regenerator.py")
+	time.sleep(3)
     if port == "DEFAULT":
         port = 5000
         # --workers=5 --threads=2
